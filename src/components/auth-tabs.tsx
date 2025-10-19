@@ -172,9 +172,9 @@ export function AuthTabs() {
                 <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <Button variant="outline"><GoogleIcon className="mr-2" />Google</Button>
-              <Button variant="outline"><AppleIcon className="mr-2" />Apple</Button>
+            <div className="space-y-4 mt-4">
+              <Button variant="outline" className="w-full"><GoogleIcon className="mr-2" />Continue with Google</Button>
+              <Button variant="outline" className="w-full"><AppleIcon className="mr-2" />Continue with Apple</Button>
             </div>
             <p className="mt-6 text-center text-sm text-muted-foreground">
               Don't have an account? <Button variant="link" className="p-0" onClick={() => setActiveTab("signup")}>Sign up</Button>
