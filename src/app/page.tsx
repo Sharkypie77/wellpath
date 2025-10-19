@@ -56,17 +56,22 @@ const testimonials = [
 ];
 
 export default function LandingPage() {
-  const [loading, setLoading] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
   const heroImage = placeholderImages.find(p => p.id === "hero");
 
   useEffect(() => {
     // This effect ensures that the splash screen is only shown once on the client-side.
-    setLoading(false);
+    // It uses a session storage item to "remember" if the user has seen it.
+    if (sessionStorage.getItem("splashScreenSeen")) {
+      setShowSplash(false);
+    } else {
+      sessionStorage.setItem("splashScreenSeen", "true");
+    }
   }, []);
 
-  if (loading) {
-    // Show splash screen only on initial client-side render
-    return <SplashScreen onFinished={() => setLoading(false)} />;
+  if (showSplash) {
+    // Show splash screen only on initial client-side render if not seen before
+    return <SplashScreen onFinished={() => setShowSplash(false)} />;
   }
   
   return (
@@ -239,3 +244,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+    
