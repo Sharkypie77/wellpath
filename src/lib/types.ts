@@ -102,3 +102,15 @@ export const ChatbotOutputSchema = z.object({
   response: z.string(),
 });
 export type ChatbotOutput = z.infer<typeof ChatbotOutputSchema>;
+
+
+export const DailyQuizQuestionInputSchema = z.object({});
+export type DailyQuizQuestionInput = z.infer<typeof DailyQuizQuestionInputSchema>;
+
+export const DailyQuizQuestionOutputSchema = z.object({
+  question: z.string().describe('The quiz question.'),
+  options: z.array(z.string()).length(4).describe('An array of 4 possible answers.'),
+  correctAnswerIndex: z.number().min(0).max(3).describe('The index of the correct answer in the options array.'),
+  explanation: z.string().describe('A brief explanation of the correct answer.'),
+});
+export type DailyQuizQuestionOutput = z.infer<typeof DailyQuizQuestionOutputSchema>;

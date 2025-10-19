@@ -26,6 +26,7 @@ import {
   CalendarDays,
   User,
   MessageCircle,
+  ClipboardCheck,
 } from "lucide-react"
 import { Logo } from "@/components/logo"
 import { AppHeader } from "@/components/app-header"
@@ -33,6 +34,7 @@ import { AppHeader } from "@/components/app-header"
 const menuItems = [
   { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
   { href: "/assessment", icon: HeartPulse, label: "Assessment" },
+  { href: "/daily-quiz", icon: ClipboardCheck, label: "Daily Quiz" },
   { href: "/chatbot", icon: MessageCircle, label: "Chatbot" },
   { href: "/education", icon: BookOpen, label: "Education" },
   { href: "/medications", icon: Pill, label: "Medications" },
