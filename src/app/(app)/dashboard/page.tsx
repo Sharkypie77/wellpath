@@ -9,25 +9,34 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { mockDashboardMetrics, mockUser, mockHealthTips } from "@/lib/data";
+import { mockDashboardMetrics, mockHealthTips } from "@/lib/data";
 import DashboardMetricCard from "@/components/dashboard-metric-card";
 import { Activity, CalendarPlus, Lightbulb, PlusCircle } from "lucide-react";
 import { format } from "date-fns";
+import { useUser } from "@/firebase/provider";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const dynamic = 'force-dynamic';
 
 export default function Dashboard() {
+  const { user, isUserLoading } = useUser();
   const today = new Date();
   
+  const firstName = user?.displayName?.split(' ')[0];
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex flex-1 flex-col gap-6 md:gap-8">
         {/* Welcome Section */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
             <div className="space-y-1">
-                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight font-headline">
-                    Welcome back, {mockUser.name.split(' ')[0]}!
-                </h1>
+                 {isUserLoading ? (
+                    <Skeleton className="h-9 w-48" />
+                 ) : (
+                    <h1 className="text-2xl md:text-3xl font-bold tracking-tight font-headline">
+                        Welcome back, {firstName || 'User'}!
+                    </h1>
+                 )}
                 <p className="text-muted-foreground">
                     {format(today, "EEEE, MMMM dd, yyyy")}
                 </p>
