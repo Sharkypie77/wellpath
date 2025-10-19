@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -99,7 +100,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <SidebarInset>
         <AppHeader />
         <main className="min-h-0 flex-1 overflow-auto p-4 md:p-6 lg:p-8">
-          {children}
+          <div className="mx-auto w-full max-w-7xl">{children}</div>
         </main>
         <AttributionFooter />
       </SidebarInset>
