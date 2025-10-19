@@ -40,6 +40,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Loader2 } from "lucide-react";
 
 
 const profileSchema = z.object({
@@ -60,6 +61,7 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 export function ProfileForm() {
   const { toast } = useToast();
   const [bmi, setBmi] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -106,11 +108,16 @@ export function ProfileForm() {
   }, [watchHeight, watchWeight]);
 
   function onSubmit(data: ProfileFormData) {
-    localStorage.setItem("userProfile", JSON.stringify(data));
-    toast({
-      title: "Profile Saved!",
-      description: "Your personal information has been updated.",
-    });
+    setIsSaving(true);
+    // Simulate API call
+    setTimeout(() => {
+      localStorage.setItem("userProfile", JSON.stringify(data));
+      toast({
+        title: "Profile Saved!",
+        description: "Your personal information has been updated.",
+      });
+      setIsSaving(false);
+    }, 1000);
   }
 
   const userInitials = form.getValues("personal.name")?.split(' ').map(n => n[0]).join('') || "";
@@ -193,7 +200,10 @@ export function ProfileForm() {
             </div>
             
             <div className="flex justify-end">
-              <Button type="submit">Save Changes</Button>
+              <Button type="submit" disabled={isSaving}>
+                {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isSaving ? "Saving..." : "Save Changes"}
+              </Button>
             </div>
           </form>
         </Form>
@@ -260,7 +270,7 @@ export function ProfileForm() {
             <CardDescription>
               Manage your account data and privacy settings.
             </CardDescription>
-          </CardHeader>
+          </Header>
           <CardContent className="space-y-4">
               <Button variant="outline">Export My Data</Button>
               <AlertDialog>
