@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, HeartPulse, Stethoscope, Syringe } from "lucide-react";
@@ -7,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LandingHeader } from "@/components/landing-header";
 import { LandingFooter } from "@/components/landing-footer";
 import { placeholderImages } from "@/lib/data";
+import { SplashScreen } from "@/components/splash-screen";
 
 const features = [
   {
@@ -51,7 +55,21 @@ const testimonials = [
 ];
 
 export default function LandingPage() {
+  const [loading, setLoading] = useState(true);
   const heroImage = placeholderImages.find(p => p.id === "hero");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2800); // Adjust time as needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <SplashScreen />;
+  }
+  
   return (
     <div className="flex flex-col min-h-screen">
       <LandingHeader />
