@@ -100,6 +100,8 @@ export function ProfileForm() {
   const watchName = form.watch("personal.name");
   const watchEmail = form.watch("personal.email");
 
+  const userInitials = watchName?.split(' ').map(n => n[0]).join('') || "";
+
   useEffect(() => {
     if (watchHeight > 0 && watchWeight > 0) {
       const heightInMeters = watchHeight / 100;
@@ -122,8 +124,6 @@ export function ProfileForm() {
       setIsSaving(false);
     }, 1000);
   }
-
-  const userInitials = watchName?.split(' ').map(n => n[0]).join('') || "";
 
   return (
     <Tabs defaultValue="personal" className="w-full">
