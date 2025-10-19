@@ -2,7 +2,7 @@ import { Logo } from "@/components/logo";
 
 export function SplashScreen() {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background animate-fade-out" style={{animationDelay: '2.5s'}}>
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background animate-fade-out" style={{animationDelay: '2.5s', animationFillMode: 'forwards'}}>
       <div className="flex flex-col items-center justify-center space-y-4">
         <div className="animate-fade-in-scale" style={{animationDelay: '0.2s'}}>
             <div className="animate-pulse-glow" style={{animationDelay: '1s'}}>
