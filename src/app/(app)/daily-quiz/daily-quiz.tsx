@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Loader2, Flame, Check, X } from "lucide-react";
-import { generateDailyQuizQuestion } from "./actions";
+import { getDailyQuizQuestion } from "./actions";
 import type { DailyQuizQuestionOutput } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,7 +40,7 @@ export function DailyQuiz() {
   const fetchQuiz = async () => {
     setStatus("loading");
     try {
-      const result = await generateDailyQuizQuestion();
+      const result = await getDailyQuizQuestion();
       setQuiz(result);
       setStatus("ready");
     } catch (error) {
