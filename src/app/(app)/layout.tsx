@@ -31,6 +31,7 @@ import {
 } from "lucide-react"
 import { Logo } from "@/components/logo"
 import { AppHeader } from "@/components/app-header"
+import { AttributionFooter } from "@/components/attribution-footer"
 
 const menuItems = [
   { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
@@ -100,6 +101,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <main className="min-h-0 flex-1 overflow-auto p-4 md:p-6 lg:p-8">
           {children}
         </main>
+        <AttributionFooter />
       </SidebarInset>
     </SidebarProvider>
   )

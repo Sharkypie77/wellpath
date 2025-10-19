@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { Eye, EyeOff, Loader2 } from "lucide-react"
+import { Eye, EyeOff, Github, Linkedin, Loader2, Mail } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -243,6 +243,20 @@ export function AuthTabs() {
            </div>
         </TabsContent>
       </Tabs>
+      <div className="text-center text-xs text-muted-foreground mt-4">
+        <p>Built by Hemanth Allam | Powered by React & Genkit</p>
+        <div className="flex items-center justify-center space-x-2 mt-1">
+          <Link href="https://www.linkedin.com/in/hemanth-allam77777777777/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-primary hover:scale-110 transition-transform">
+            <Linkedin className="w-4 h-4" />
+          </Link>
+          <Link href="https://github.com/Sharkypie77" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-primary hover:scale-110 transition-transform">
+            <Github className="w-4 h-4" />
+          </Link>
+          <Link href="mailto:hemanthallam1@gmail.com" className="text-gray-600 hover:text-primary hover:scale-110 transition-transform">
+            <Mail className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }

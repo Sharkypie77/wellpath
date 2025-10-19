@@ -18,6 +18,9 @@ export function SplashScreen() {
           <div className="h-2 w-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
         </div>
       </div>
+       <div className="absolute bottom-8 text-sm text-muted-foreground animate-fade-in" style={{animationDelay: '1.5s'}}>
+        Created by Hemanth Allam
+      </div>
     </div>
   );
 }
