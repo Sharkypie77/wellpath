@@ -1,17 +1,17 @@
 
 "use client";
 
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export const dynamic = 'force-dynamic';
 
-const AuthTabs = dynamic(() => import('@/components/auth-tabs').then(mod => mod.AuthTabs), {
+const AuthTabs = dynamicImport(() => import('@/components/auth-tabs').then(mod => mod.AuthTabs), {
   ssr: false,
   loading: () => <Skeleton className="w-full h-[600px]" />,
 });
 
-const AuthVisual = dynamic(() => import('@/components/auth-visual').then(mod => mod.AuthVisual), {
+const AuthVisual = dynamicImport(() => import('@/components/auth-visual').then(mod => mod.AuthVisual), {
   ssr: false,
   loading: () => <Skeleton className="w-full h-full" />,
 });

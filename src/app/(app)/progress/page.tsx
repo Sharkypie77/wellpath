@@ -1,7 +1,7 @@
 
 "use client";
 
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export const dynamic = 'force-dynamic';
 
-const HealthCharts = dynamic(() => import('@/components/health-charts').then(mod => mod.HealthCharts), {
+const HealthCharts = dynamicImport(() => import('@/components/health-charts').then(mod => mod.HealthCharts), {
   ssr: false,
   loading: () => <Skeleton className="h-[250px] w-full" />
 });

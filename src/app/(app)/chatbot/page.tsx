@@ -1,7 +1,7 @@
 
 "use client";
 
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 import {
   Card,
   CardContent,
@@ -14,7 +14,7 @@ import { Loader2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
-const ChatbotUI = dynamic(() => import('./chatbot-ui').then(mod => mod.ChatbotUI), {
+const ChatbotUI = dynamicImport(() => import('./chatbot-ui').then(mod => mod.ChatbotUI), {
   ssr: false,
   loading: () => (
     <div className="flex flex-col h-full items-center justify-center">

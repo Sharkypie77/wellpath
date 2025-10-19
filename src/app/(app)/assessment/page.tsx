@@ -1,7 +1,7 @@
 
 "use client";
 
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export const dynamic = 'force-dynamic';
 
-const AssessmentForm = dynamic(() => import('./assessment-form').then(mod => mod.AssessmentForm), { 
+const AssessmentForm = dynamicImport(() => import('./assessment-form').then(mod => mod.AssessmentForm), { 
   ssr: false,
   loading: () => <AssessmentFormSkeleton />
 });

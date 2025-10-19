@@ -11,8 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LandingHeader } from "@/components/landing-header";
 import { LandingFooter } from "@/components/landing-footer";
 import { placeholderImages } from "@/lib/data";
-import { SplashScreen } from "@/components/splash-screen";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 
 export const dynamic = 'force-dynamic';
 
@@ -58,7 +57,7 @@ const testimonials = [
   },
 ];
 
-const DynamicSplashScreen = dynamic(() => import('@/components/splash-screen').then(mod => mod.SplashScreen), { ssr: false });
+const DynamicSplashScreen = dynamicImport(() => import('@/components/splash-screen').then(mod => mod.SplashScreen), { ssr: false });
 
 export default function LandingPage() {
   const [showSplash, setShowSplash] = useState(true);
@@ -246,5 +245,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-    

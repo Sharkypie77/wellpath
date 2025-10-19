@@ -1,7 +1,7 @@
 
 "use client";
 
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import { Loader2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
-const DailyQuiz = dynamic(() => import('./daily-quiz').then(mod => mod.DailyQuiz), {
+const DailyQuiz = dynamicImport(() => import('./daily-quiz').then(mod => mod.DailyQuiz), {
   ssr: false,
   loading: () => (
     <div className="flex flex-col items-center justify-center min-h-[200px] space-y-4">
