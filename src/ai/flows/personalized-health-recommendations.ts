@@ -35,14 +35,14 @@ const prompt = ai.definePrompt({
   output: {schema: PersonalizedHealthRecommendationsOutputSchema},
   prompt: `You are an AI health assistant providing personalized health recommendations to users.
 
-  Based on the user's health risk assessment results, health metrics, and medical history, generate personalized health recommendations.
+  Based on the user's health risk assessment results, health metrics, and medical history, generate a single-sentence health recommendation.
 
   Health Risk Assessment Results: {{{healthRiskAssessmentResults}}}
   Health Metrics: {{{healthMetrics}}}
   Medical History: {{{medicalHistory}}}
 
-  Provide clear, actionable, and concise recommendations. Focus on preventive measures and lifestyle adjustments.
-  Return the recommendations in the following format:
+  Provide a clear, actionable, and concise one-line recommendation.
+  Return the recommendation in the following format:
   {{recommendations}}`,
 });
 
