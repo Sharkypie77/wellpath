@@ -184,7 +184,7 @@ export function ProfileForm() {
                     <FormItem> <FormLabel>Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /> </FormItem>
                 )} />
                 <FormField control={form.control} name="personal.email" render={({ field }) => (
-                    <FormItem> <FormLabel>Email</FormLabel><FormControl><Input type="email" {...field} readOnly /></FormControl><FormMessage /> </FormItem>
+                    <FormItem> <FormLabel>Email</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /> </FormItem>
                 )} />
                 <FormField control={form.control} name="personal.age" render={({ field }) => (
                     <FormItem> <FormLabel>Age</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /> </FormItem>
