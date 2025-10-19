@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from 'react-markdown';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, User, Bot } from "lucide-react";
@@ -69,7 +70,9 @@ export function ChatbotUI() {
                   ? "bg-accent text-accent-foreground"
                   : "bg-muted text-muted-foreground"
               }`}>
-              <p className="text-sm">{msg.content}</p>
+              <div className="prose prose-sm max-w-none text-foreground">
+                <ReactMarkdown>{msg.content}</ReactMarkdown>
+              </div>
             </div>
             {msg.role === "user" && (
               <div className="p-2 bg-accent rounded-full text-accent-foreground">
