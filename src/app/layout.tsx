@@ -7,7 +7,6 @@ import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import i18n from '@/lib/i18n';
-import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { ThemeProvider } from '@/components/theme-provider';
 
 export const dynamic = 'force-dynamic';
@@ -51,9 +50,7 @@ export default function RootLayout({
                 defaultTheme="system"
                 enableSystem
               >
-                <FirebaseClientProvider>
                   {children}
-                </FirebaseClientProvider>
                 <Toaster />
               </ThemeProvider>
             </LanguageManager>
