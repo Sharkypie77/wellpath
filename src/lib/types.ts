@@ -55,10 +55,12 @@ export interface Appointment {
   status: 'Scheduled' | 'Completed' | 'Cancelled';
 }
 
+export type ArticleCategory = 'Diabetes' | 'Hypertension' | 'Heart Health' | 'Nutrition' | 'Exercise';
+
 export interface Article {
   id: string;
   title: string;
-  category: 'Diabetes' | 'Hypertension' | 'Heart Health' | 'Nutrition';
+  category: ArticleCategory;
   summary: string;
   content: string;
   imageUrl: string;

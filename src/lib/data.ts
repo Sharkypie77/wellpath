@@ -1,4 +1,4 @@
-import type { User, HealthMetric, Appointment, Medication, Article, DashboardMetric } from './types';
+import type { User, HealthMetric, Appointment, Medication, Article, DashboardMetric, ArticleCategory } from './types';
 import placeholderData from './placeholder-images.json';
 
 export const placeholderImages = placeholderData.placeholderImages;
@@ -163,13 +163,15 @@ export const mockMedications: Medication[] = [
   },
 ];
 
+export const articleCategories: ArticleCategory[] = ['Diabetes', 'Hypertension', 'Heart Health', 'Nutrition', 'Exercise'];
+
 export const mockArticles: Article[] = [
   {
-    id: 'article-1',
+    id: 'managing-diabetes-through-diet',
     title: 'Managing Diabetes Through Diet',
     category: 'Diabetes',
     summary: 'Learn how dietary changes can help manage blood sugar levels and improve your overall health.',
-    content: 'Full article content here...',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
     imageUrl: placeholderImages.find(p => p.id === 'article_diabetes')?.imageUrl || '',
     imageHint: 'healthy food',
     readTime: 5,
@@ -178,11 +180,11 @@ export const mockArticles: Article[] = [
     tags: ['diabetes', 'diet', 'nutrition'],
   },
   {
-    id: 'article-2',
+    id: '5-tips-to-lower-your-blood-pressure',
     title: '5 Tips to Lower Your Blood Pressure',
     category: 'Hypertension',
     summary: 'Simple lifestyle changes you can make to reduce hypertension and improve cardiovascular health.',
-    content: 'Full article content here...',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
     imageUrl: placeholderImages.find(p => p.id === 'article_hypertension')?.imageUrl || '',
     imageHint: 'blood pressure',
     readTime: 4,
@@ -190,12 +192,12 @@ export const mockArticles: Article[] = [
     publishDate: new Date('2023-09-20'),
     tags: ['hypertension', 'blood pressure', 'lifestyle'],
   },
-    {
-    id: 'article-3',
+  {
+    id: 'the-importance-of-cardio-for-heart-health',
     title: 'The Importance of Cardio for Heart Health',
     category: 'Heart Health',
     summary: 'Discover the benefits of cardiovascular exercise and how to incorporate it into your routine.',
-    content: 'Full article content here...',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
     imageUrl: placeholderImages.find(p => p.id === 'article_heart')?.imageUrl || '',
     imageHint: 'running park',
     readTime: 6,
@@ -204,16 +206,68 @@ export const mockArticles: Article[] = [
     tags: ['heart health', 'exercise', 'cardio'],
   },
   {
-    id: 'article-4',
+    id: 'a-guide-to-balanced-nutrition',
     title: 'A Guide to Balanced Nutrition',
     category: 'Nutrition',
     summary: 'Understand the building blocks of a healthy diet and how to create balanced meals.',
-    content: 'Full article content here...',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
     imageUrl: placeholderImages.find(p => p.id === 'article_nutrition')?.imageUrl || '',
     imageHint: 'salad bowl',
     readTime: 7,
     author: 'Dr. Jane Smith',
     publishDate: new Date('2023-09-28'),
     tags: ['nutrition', 'diet', 'healthy eating'],
+  },
+  {
+    id: 'beginner-guide-to-strength-training',
+    title: "Beginner's Guide to Strength Training",
+    category: 'Exercise',
+    summary: 'Everything you need to know to start building muscle and strength, even as a complete beginner.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.',
+    imageUrl: placeholderImages.find(p => p.id === 'article_exercise1')?.imageUrl || 'https://picsum.photos/seed/ex1/400/225',
+    imageHint: 'person lifting weights',
+    readTime: 8,
+    author: 'Mike Anderson',
+    publishDate: new Date('2023-10-02'),
+    tags: ['exercise', 'strength training', 'fitness'],
+  },
+  {
+    id: 'understanding-your-cholesterol-levels',
+    title: 'Understanding Your Cholesterol Levels',
+    category: 'Heart Health',
+    summary: "A comprehensive guide to LDL, HDL, and triglycerides, and what they mean for your heart.",
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.',
+    imageUrl: placeholderImages.find(p => p.id === 'article_cholesterol')?.imageUrl || 'https://picsum.photos/seed/chol/400/225',
+    imageHint: 'blood test',
+    readTime: 6,
+    author: 'Dr. Emily Carter',
+    publishDate: new Date('2023-10-05'),
+    tags: ['cholesterol', 'heart health', 'lipids'],
+  },
+  {
+    id: 'mindful-eating-for-a-healthier-life',
+    title: 'Mindful Eating for a Healthier Life',
+    category: 'Nutrition',
+    summary: 'Learn to listen to your body\'s hunger cues and build a better relationship with food.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.',
+    imageUrl: placeholderImages.find(p => p.id === 'article_mindful_eating')?.imageUrl || 'https://picsum.photos/seed/mindful/400/225',
+    imageHint: 'person meditating food',
+    readTime: 5,
+    author: 'Dr. Sarah Chen',
+    publishDate: new Date('2023-10-08'),
+    tags: ['nutrition', 'mindfulness', 'eating habits'],
+  },
+  {
+    id: 'benefits-of-high-intensity-interval-training',
+    title: 'Benefits of High-Intensity Interval Training (HIIT)',
+    category: 'Exercise',
+    summary: 'Find out why HIIT is a time-efficient and effective way to boost your fitness.',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.',
+    imageUrl: placeholderImages.find(p => p.id === 'article_hiit')?.imageUrl || 'https://picsum.photos/seed/hiit/400/225',
+    imageHint: 'person sprinting track',
+    readTime: 5,
+    author: 'Mike Anderson',
+    publishDate: new Date('2023-10-11'),
+    tags: ['exercise', 'hiit', 'cardio', 'fitness'],
   },
 ];

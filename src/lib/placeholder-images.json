@@ -71,6 +71,30 @@
       "description": "Profile picture of Dr. Ben Adams.",
       "imageUrl": "https://images.unsplash.com/photo-1631558554770-74e921444006?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkb2N0b3IlMjBtYW58ZW58MHx8fHwxNzYwODYzOTI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "doctor man"
+    },
+    {
+      "id": "article_exercise1",
+      "description": "A person lifting weights in a gym.",
+      "imageUrl": "https://images.unsplash.com/photo-1609899464726-209befaac5bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBsaWZ0aW5nJTIwd2VpZ2h0c3xlbnwwfHx8fDE3NjA4Nzg5MDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person lifting weights"
+    },
+    {
+      "id": "article_cholesterol",
+      "description": "A vile of blood for a blood test.",
+      "imageUrl": "https://images.unsplash.com/photo-1599556147783-7edf67c327e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxibG9vZCUyMHRlc3R8ZW58MHx8fHwxNzYwODc4OTA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "blood test"
+    },
+    {
+      "id": "article_mindful_eating",
+      "description": "A person meditating in front of a healthy meal.",
+      "imageUrl": "https://images.unsplash.com/photo-1636036175498-ffaae32ac497?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwZXJzb24lMjBtZWRpdGF0aW5nJTIwZm9vZHxlbnwwfHx8fDE3NjA4Nzg5MDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person meditating food"
+    },
+    {
+      "id": "article_hiit",
+      "description": "A person sprinting on a track.",
+      "imageUrl": "https://images.unsplash.com/photo-1738495632412-eab7c543bc25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwZXJzb24lMjBzcHJpbnRpbmclMjB0cmFja3xlbnwwfHx8fDE3NjA4Nzg5MDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person sprinting track"
     }
   ]
 }
