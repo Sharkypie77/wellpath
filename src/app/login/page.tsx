@@ -1,5 +1,19 @@
-import { AuthTabs } from "@/components/auth-tabs";
-import { AuthVisual } from "@/components/auth-visual";
+
+"use client";
+
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const AuthTabs = dynamic(() => import('@/components/auth-tabs').then(mod => mod.AuthTabs), {
+  ssr: false,
+  loading: () => <Skeleton className="w-full h-[600px]" />,
+});
+
+const AuthVisual = dynamic(() => import('@/components/auth-visual').then(mod => mod.AuthVisual), {
+  ssr: false,
+  loading: () => <Skeleton className="w-full h-full" />,
+});
+
 
 export default function LoginPage() {
   return (

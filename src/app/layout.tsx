@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Suspense, useEffect } from 'react';
@@ -16,6 +17,7 @@ const ptSans = PT_Sans({
   style: ['normal', 'italic'],
   display: 'swap',
   variable: '--font-pt-sans',
+  preload: true,
 });
 
 // This component is needed to set the dir and lang attributes on the html tag

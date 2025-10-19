@@ -1,3 +1,7 @@
+
+"use client";
+
+import dynamic from 'next/dynamic';
 import {
   Card,
   CardContent,
@@ -5,7 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { HealthCharts } from "@/components/health-charts";
+import { Skeleton } from '@/components/ui/skeleton';
+
+const HealthCharts = dynamic(() => import('@/components/health-charts').then(mod => mod.HealthCharts), {
+  ssr: false,
+  loading: () => <Skeleton className="h-[250px] w-full" />
+});
+
 
 export default function ProgressPage() {
   return (

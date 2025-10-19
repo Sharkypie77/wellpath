@@ -1,6 +1,7 @@
 
 "use client";
 
+import React from 'react';
 import Image from "next/image";
 import { format } from "date-fns";
 import { Appointment } from "@/lib/types";
@@ -16,7 +17,7 @@ interface AppointmentCardProps {
   appointment: Appointment;
 }
 
-export function AppointmentCard({ appointment }: AppointmentCardProps) {
+export const AppointmentCard = React.memo(function AppointmentCard({ appointment }: AppointmentCardProps) {
   const {
     providerName,
     providerSpecialty,
@@ -83,4 +84,4 @@ export function AppointmentCard({ appointment }: AppointmentCardProps) {
       </CardContent>
     </Card>
   );
-}
+});

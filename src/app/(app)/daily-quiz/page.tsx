@@ -1,3 +1,7 @@
+
+"use client";
+
+import dynamic from 'next/dynamic';
 import {
   Card,
   CardContent,
@@ -5,7 +9,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DailyQuiz } from "./daily-quiz";
+import { Loader2 } from 'lucide-react';
+
+const DailyQuiz = dynamic(() => import('./daily-quiz').then(mod => mod.DailyQuiz), {
+  ssr: false,
+  loading: () => (
+    <div className="flex flex-col items-center justify-center min-h-[200px] space-y-4">
+      <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <p>Loading quiz...</p>
+    </div>
+  )
+});
+
 
 export default function DailyQuizPage() {
   return (

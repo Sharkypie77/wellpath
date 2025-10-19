@@ -1,3 +1,5 @@
+
+import React from 'react';
 import {
   Card,
   CardContent,
@@ -36,7 +38,7 @@ const trendIcons = {
   stable: <ArrowRight className="w-4 h-4" />,
 };
 
-export default function DashboardMetricCard({ metric }: { metric: DashboardMetric }) {
+const DashboardMetricCard = React.memo(function DashboardMetricCard({ metric }: { metric: DashboardMetric }) {
   const { type, value, unit, status, trend } = metric;
   
   return (
@@ -60,4 +62,6 @@ export default function DashboardMetricCard({ metric }: { metric: DashboardMetri
       </CardContent>
     </Card>
   );
-}
+});
+
+export default DashboardMetricCard;

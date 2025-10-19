@@ -1,4 +1,7 @@
-import { ChatbotUI } from './chatbot-ui';
+
+"use client";
+
+import dynamic from 'next/dynamic';
 import {
   Card,
   CardContent,
@@ -6,6 +9,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Loader2 } from 'lucide-react';
+
+const ChatbotUI = dynamic(() => import('./chatbot-ui').then(mod => mod.ChatbotUI), {
+  ssr: false,
+  loading: () => (
+    <div className="flex flex-col h-full items-center justify-center">
+      <Loader2 className="w-8 h-8 animate-spin" />
+    </div>
+  ),
+});
+
 
 export default function ChatbotPage() {
   return (
