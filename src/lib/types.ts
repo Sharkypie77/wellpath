@@ -8,7 +8,7 @@ export interface User {
   gender: 'Male' | 'Female' | 'Other';
   height: number; // in cm
   weight: number; // in kg
-  bloodType?: string;
+  bloodType: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-" | "Unknown";
   emergencyContact: {
     name: string;
     phone: string;
@@ -16,6 +16,7 @@ export interface User {
   };
   medicalHistory: string[];
   allergies: string[];
+  phone?: string;
 }
 
 export type HealthMetricType = 'Blood Pressure' | 'Glucose' | 'Weight' | 'BMI' | 'Heart Rate';
@@ -44,7 +45,7 @@ export interface Medication {
 
 export interface Appointment {
   id: string;
-  userId: string;
+  userId:string;
   providerId: string;
   providerName: string;
   providerSpecialty: string;
@@ -129,4 +130,17 @@ export interface DashboardMetric {
   unit: string;
   status: MetricStatus;
   trend: Trend;
+}
+
+export interface ProfileForm {
+    personal: {
+        name: string;
+        email: string;
+        age: number;
+        gender: 'Male' | 'Female' | 'Other';
+        phone?: string;
+        height: number;
+        weight: number;
+        bloodType: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-" | "Unknown";
+    };
 }

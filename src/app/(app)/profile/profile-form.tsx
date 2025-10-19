@@ -1,0 +1,290 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { mockUser } from "@/lib/data";
+import { useToast } from "@/hooks/use-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+
+const profileSchema = z.object({
+  personal: z.object({
+    name: z.string().min(2, "Name must be at least 2 characters."),
+    email: z.string().email("Please enter a valid email address."),
+    age: z.coerce.number().min(18, "You must be at least 18."),
+    gender: z.enum(["Male", "Female", "Other"]),
+    phone: z.string().optional(),
+    height: z.coerce.number().min(50, "Height must be a positive number."),
+    weight: z.coerce.number().min(20, "Weight must be a positive number."),
+    bloodType: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Unknown"]),
+  }),
+});
+
+type ProfileFormData = z.infer<typeof profileSchema>;
+
+export function ProfileForm() {
+  const { toast } = useToast();
+  const [bmi, setBmi] = useState<string | null>(null);
+
+  const form = useForm<ProfileFormData>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      personal: {
+        name: "",
+        email: "",
+        age: 0,
+        gender: "Male",
+        phone: "",
+        height: 0,
+        weight: 0,
+        bloodType: "Unknown",
+      },
+    },
+  });
+
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem("userProfile");
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        form.reset({ personal: { ...mockUser, ...parsedData.personal } });
+      } else {
+        form.reset({ personal: mockUser });
+      }
+    } catch (error) {
+        console.error("Failed to parse user profile from localStorage", error)
+        form.reset({ personal: mockUser });
+    }
+  }, [form]);
+
+  const watchHeight = form.watch("personal.height");
+  const watchWeight = form.watch("personal.weight");
+
+  useEffect(() => {
+    if (watchHeight > 0 && watchWeight > 0) {
+      const heightInMeters = watchHeight / 100;
+      const calculatedBmi = (watchWeight / (heightInMeters * heightInMeters)).toFixed(1);
+      setBmi(calculatedBmi);
+    } else {
+      setBmi(null);
+    }
+  }, [watchHeight, watchWeight]);
+
+  function onSubmit(data: ProfileFormData) {
+    localStorage.setItem("userProfile", JSON.stringify(data));
+    toast({
+      title: "Profile Saved!",
+      description: "Your personal information has been updated.",
+    });
+  }
+
+  const userInitials = form.getValues("personal.name")?.split(' ').map(n => n[0]).join('') || "";
+
+  return (
+    <Tabs defaultValue="personal" className="w-full">
+      <TabsList className="grid w-full grid-cols-5">
+        <TabsTrigger value="personal">Personal Info</TabsTrigger>
+        <TabsTrigger value="medical">Medical History</TabsTrigger>
+        <TabsTrigger value="emergency">Emergency</TabsTrigger>
+        <TabsTrigger value="settings">Settings</TabsTrigger>
+        <TabsTrigger value="privacy">Data & Privacy</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="personal">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
+            <div className="flex items-center gap-6">
+              <Avatar className="h-20 w-20">
+                <AvatarImage src="/avatars/01.png" alt={form.getValues("personal.name")} />
+                <AvatarFallback>{userInitials}</AvatarFallback>
+              </Avatar>
+              <div className="space-y-1">
+                 <h3 className="text-xl font-semibold">{form.getValues("personal.name")}</h3>
+                 <p className="text-sm text-muted-foreground">{form.getValues("personal.email")}</p>
+                 <Button variant="outline" size="sm" type="button">Change Picture</Button>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+                <FormField control={form.control} name="personal.name" render={({ field }) => (
+                    <FormItem> <FormLabel>Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /> </FormItem>
+                )} />
+                <FormField control={form.control} name="personal.email" render={({ field }) => (
+                    <FormItem> <FormLabel>Email</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /> </FormItem>
+                )} />
+                <FormField control={form.control} name="personal.age" render={({ field }) => (
+                    <FormItem> <FormLabel>Age</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /> </FormItem>
+                )} />
+                <FormField control={form.control} name="personal.gender" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Gender</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl>
+                            <SelectContent>
+                                <SelectItem value="Male">Male</SelectItem>
+                                <SelectItem value="Female">Female</SelectItem>
+                                <SelectItem value="Other">Other</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+                 <FormField control={form.control} name="personal.height" render={({ field }) => (
+                    <FormItem> <FormLabel>Height (cm)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /> </FormItem>
+                )} />
+                 <FormField control={form.control} name="personal.weight" render={({ field }) => (
+                    <FormItem> <FormLabel>Weight (kg)</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /> </FormItem>
+                )} />
+                <FormField control={form.control} name="personal.bloodType" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Blood Type</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl>
+                            <SelectContent>
+                                {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Unknown"].map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+                <div className="flex items-end">
+                    <Card className="w-full">
+                        <CardHeader className="p-3">
+                            <CardDescription>Calculated BMI</CardDescription>
+                            <CardTitle className="text-2xl">{bmi || "N/A"}</CardTitle>
+                        </CardHeader>
+                    </Card>
+                </div>
+            </div>
+            
+            <div className="flex justify-end">
+              <Button type="submit">Save Changes</Button>
+            </div>
+          </form>
+        </Form>
+      </TabsContent>
+      
+      <TabsContent value="medical">
+        <Card className="mt-6">
+            <CardHeader><CardTitle>Coming Soon</CardTitle><CardDescription>This feature is under development.</CardDescription></CardHeader>
+            <CardContent><p>Manage your medical history, conditions, and allergies here.</p></CardContent>
+        </Card>
+      </TabsContent>
+      
+      <TabsContent value="emergency">
+        <Card className="mt-6">
+            <CardHeader><CardTitle>Coming Soon</CardTitle><CardDescription>This feature is under development.</CardDescription></CardHeader>
+            <CardContent><p>Add and manage your emergency contacts.</p></CardContent>
+        </Card>
+      </TabsContent>
+
+      <TabsContent value="settings">
+         <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Settings</CardTitle>
+            <CardDescription>
+              Manage your application preferences.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="flex items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <Label htmlFor="dark-mode">Dark Mode</Label>
+                <p className="text-xs text-muted-foreground">
+                  Enable or disable the dark theme.
+                </p>
+              </div>
+              <Switch id="dark-mode" />
+            </div>
+             <div className="flex items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <Label htmlFor="reminders">Medication Reminders</Label>
+                 <p className="text-xs text-muted-foreground">
+                  Receive push notifications for your medications.
+                </p>
+              </div>
+              <Switch id="reminders" defaultChecked />
+            </div>
+             <div className="flex items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <Label htmlFor="health-tips">Health Tips</Label>
+                 <p className="text-xs text-muted-foreground">
+                  Get daily tips for a healthier lifestyle.
+                </p>
+              </div>
+              <Switch id="health-tips" defaultChecked/>
+            </div>
+          </CardContent>
+        </Card>
+      </TabsContent>
+      
+      <TabsContent value="privacy">
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Data & Privacy</CardTitle>
+            <CardDescription>
+              Manage your account data and privacy settings.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+              <Button variant="outline">Export My Data</Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                    <Button variant="destructive">Delete Account</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete your
+                        account and remove your data from our servers.
+                    </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+          </CardContent>
+        </Card>
+      </TabsContent>
+
+    </Tabs>
+  );
+}
