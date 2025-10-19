@@ -1,0 +1,596 @@
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents a user's profile within the HealthWise Hub platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user profile."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's full name."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "age": {
+          "type": "number",
+          "description": "The user's age in years."
+        },
+        "gender": {
+          "type": "string",
+          "description": "The user's gender."
+        },
+        "height": {
+          "type": "number",
+          "description": "The user's height in centimeters."
+        },
+        "weight": {
+          "type": "number",
+          "description": "The user's weight in kilograms."
+        },
+        "bloodType": {
+          "type": "string",
+          "description": "The user's blood type (optional)."
+        },
+        "emergencyContactName": {
+          "type": "string",
+          "description": "The name of the user's emergency contact."
+        },
+        "emergencyContactPhone": {
+          "type": "string",
+          "description": "The phone number of the user's emergency contact."
+        },
+        "emergencyContactRelationship": {
+          "type": "string",
+          "description": "The relationship of the emergency contact to the user."
+        },
+        "medicalHistoryIds": {
+          "type": "array",
+          "description": "References to MedicalHistory items (Relationship: UserProfile 1:N MedicalHistory).",
+          "items": {
+            "type": "string"
+          }
+        },
+        "allergyIds": {
+          "type": "array",
+          "description": "References to Allergy items (Relationship: UserProfile 1:N Allergy).",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email",
+        "age",
+        "gender",
+        "height",
+        "weight",
+        "emergencyContactName",
+        "emergencyContactPhone",
+        "emergencyContactRelationship"
+      ]
+    },
+    "HealthMetric": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "HealthMetric",
+      "type": "object",
+      "description": "Represents a health metric measurement for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the health metric entry."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N HealthMetric)"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of health metric (e.g., bloodPressure, glucose, weight, heartRate)."
+        },
+        "value": {
+          "type": "number",
+          "description": "The value of the health metric."
+        },
+        "unit": {
+          "type": "string",
+          "description": "The unit of measurement for the health metric."
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The date and time when the health metric was recorded.",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional notes or comments about the health metric."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "value",
+        "unit",
+        "timestamp"
+      ]
+    },
+    "Medication": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Medication",
+      "type": "object",
+      "description": "Represents a medication that a user is taking.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the medication entry."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N Medication)"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the medication."
+        },
+        "dosage": {
+          "type": "string",
+          "description": "The dosage of the medication (e.g., 10mg)."
+        },
+        "frequency": {
+          "type": "string",
+          "description": "How often the medication should be taken (e.g., once daily)."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The date when the medication was started.",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The date when the medication was stopped (optional).",
+          "format": "date-time"
+        },
+        "reminders": {
+          "type": "array",
+          "description": "List of datetimes for reminders.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instructions": {
+          "type": "string",
+          "description": "Any special instructions for taking the medication."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "name",
+        "dosage",
+        "frequency",
+        "startDate",
+        "reminders",
+        "instructions"
+      ]
+    },
+    "Appointment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Appointment",
+      "type": "object",
+      "description": "Represents a scheduled appointment for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the appointment."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N Appointment)"
+        },
+        "providerId": {
+          "type": "string",
+          "description": "The ID of the healthcare provider."
+        },
+        "providerName": {
+          "type": "string",
+          "description": "The name of the healthcare provider."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of appointment (e.g., telemedicine, in-person)."
+        },
+        "dateTime": {
+          "type": "string",
+          "description": "The date and time of the appointment.",
+          "format": "date-time"
+        },
+        "duration": {
+          "type": "number",
+          "description": "The duration of the appointment in minutes."
+        },
+        "reason": {
+          "type": "string",
+          "description": "The reason for the appointment."
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the appointment (e.g., scheduled, completed, cancelled)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "providerId",
+        "providerName",
+        "type",
+        "dateTime",
+        "duration",
+        "reason",
+        "status"
+      ]
+    },
+    "HealthArticle": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "HealthArticle",
+      "type": "object",
+      "description": "Represents a health education article.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the health article."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the health article."
+        },
+        "category": {
+          "type": "string",
+          "description": "The category of the health article (e.g., Diabetes, Hypertension)."
+        },
+        "summary": {
+          "type": "string",
+          "description": "A brief summary of the health article."
+        },
+        "content": {
+          "type": "string",
+          "description": "The full content of the health article."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the image associated with the health article."
+        },
+        "readTime": {
+          "type": "number",
+          "description": "Estimated reading time for the health article in minutes."
+        },
+        "author": {
+          "type": "string",
+          "description": "The author of the health article."
+        },
+        "publishDate": {
+          "type": "string",
+          "description": "The date when the health article was published.",
+          "format": "date-time"
+        },
+        "tagIds": {
+          "type": "array",
+          "description": "References to Tag. (Relationship: HealthArticle N:N Tag)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "category",
+        "summary",
+        "content",
+        "imageUrl",
+        "readTime",
+        "author",
+        "publishDate"
+      ]
+    },
+    "HealthRiskAssessment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "HealthRiskAssessment",
+      "type": "object",
+      "description": "Represents a user's health risk assessment and associated results.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the health risk assessment."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N HealthRiskAssessment)"
+        },
+        "assessmentDate": {
+          "type": "string",
+          "description": "The date when the health risk assessment was performed.",
+          "format": "date-time"
+        },
+        "riskLevel": {
+          "type": "string",
+          "description": "The overall risk level determined by the assessment (e.g., low, medium, high)."
+        },
+        "recommendations": {
+          "type": "string",
+          "description": "Personalized health recommendations based on the assessment results."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "assessmentDate",
+        "riskLevel",
+        "recommendations"
+      ]
+    },
+    "Tag": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Tag",
+      "type": "object",
+      "description": "Represents a tag that can be applied to a health article.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the tag."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the tag (e.g., Diabetes, Nutrition)."
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "MedicalHistory": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "MedicalHistory",
+      "type": "object",
+      "description": "Represents a user's medical history item.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the medical history item."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N MedicalHistory)"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the medical history item."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "description"
+      ]
+    },
+    "Allergy": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Allergy",
+      "type": "object",
+      "description": "Represents a user's allergy.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the allergy."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N Allergy)"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the allergy."
+        },
+        "reaction": {
+          "type": "string",
+          "description": "The reaction the user has to the allergy."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "name",
+        "reaction"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Collection for storing user profiles. Each document is keyed by the user's UID.  Authorization is based on path ownership (request.auth.uid == userId).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase Auth UID of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/health_metrics/{healthMetricId}",
+        "definition": {
+          "entityName": "HealthMetric",
+          "schema": {
+            "$ref": "#/backend/entities/HealthMetric"
+          },
+          "description": "Collection for storing health metrics for a specific user. Authorization is based on path ownership (request.auth.uid == userId).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase Auth UID of the user."
+            },
+            {
+              "name": "healthMetricId",
+              "description": "The unique ID of the health metric entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/medications/{medicationId}",
+        "definition": {
+          "entityName": "Medication",
+          "schema": {
+            "$ref": "#/backend/entities/Medication"
+          },
+          "description": "Collection for storing medication information for a specific user. Authorization is based on path ownership (request.auth.uid == userId).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase Auth UID of the user."
+            },
+            {
+              "name": "medicationId",
+              "description": "The unique ID of the medication entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/appointments/{appointmentId}",
+        "definition": {
+          "entityName": "Appointment",
+          "schema": {
+            "$ref": "#/backend/entities/Appointment"
+          },
+          "description": "Collection for storing appointment information for a specific user. Authorization is based on path ownership (request.auth.uid == userId).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase Auth UID of the user."
+            },
+            {
+              "name": "appointmentId",
+              "description": "The unique ID of the appointment."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/health_articles/{healthArticleId}",
+        "definition": {
+          "entityName": "HealthArticle",
+          "schema": {
+            "$ref": "#/backend/entities/HealthArticle"
+          },
+          "description": "Collection for storing health articles.  No specific authorization required beyond basic read access.",
+          "params": [
+            {
+              "name": "healthArticleId",
+              "description": "The unique ID of the health article."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/health_risk_assessments/{healthRiskAssessmentId}",
+        "definition": {
+          "entityName": "HealthRiskAssessment",
+          "schema": {
+            "$ref": "#/backend/entities/HealthRiskAssessment"
+          },
+          "description": "Collection for storing health risk assessments for a specific user. Authorization is based on path ownership (request.auth.uid == userId).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase Auth UID of the user."
+            },
+            {
+              "name": "healthRiskAssessmentId",
+              "description": "The unique ID of the health risk assessment."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/tags/{tagId}",
+        "definition": {
+          "entityName": "Tag",
+          "schema": {
+            "$ref": "#/backend/entities/Tag"
+          },
+          "description": "Collection for storing tags. No specific authorization required beyond basic read access.",
+          "params": [
+            {
+              "name": "tagId",
+              "description": "The unique ID of the tag."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/medical_history/{medicalHistoryId}",
+        "definition": {
+          "entityName": "MedicalHistory",
+          "schema": {
+            "$ref": "#/backend/entities/MedicalHistory"
+          },
+          "description": "Collection for storing medical history items for a specific user. Authorization is based on path ownership (request.auth.uid == userId).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase Auth UID of the user."
+            },
+            {
+              "name": "medicalHistoryId",
+              "description": "The unique ID of the medical history item."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/allergies/{allergyId}",
+        "definition": {
+          "entityName": "Allergy",
+          "schema": {
+            "$ref": "#/backend/entities/Allergy"
+          },
+          "description": "Collection for storing allergy information for a specific user. Authorization is based on path ownership (request.auth.uid == userId).",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The Firebase Auth UID of the user."
+            },
+            {
+              "name": "allergyId",
+              "description": "The unique ID of the allergy."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to ensure Authorization Independence, support required QAPs (Queries are not Filters), and provide a clear, debuggable security model. User-owned data is nested under the `/users/{userId}` path, enabling simple path-based access control. Health articles are stored in a flat `/health_articles` collection, allowing for straightforward listing and filtering without complex security rules.  Authorization Independence is achieved via path-based ownership for private user data. The structure ensures that authorization checks do not rely on reading data from other documents, enabling atomic operations and simplifying security rules. Public `HealthArticle` data does not require special authorization rules. This segregation ensures that listing operations are secure and efficient.  Membership Maps are not required because path-based ownership for user specific data ensures security."
+  }
+}

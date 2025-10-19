@@ -1,0 +1,100 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "A diverse group of smiling people outdoors, representing a healthy community.",
+      "imageUrl": "https://images.unsplash.com/photo-1676385616961-d388db8ada4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkaXZlcnNlJTIwY29tbXVuaXR5JTIwaGVhbHRofGVufDB8fHx8MTc2MDg3NzE4OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "diverse community health"
+    },
+    {
+      "id": "feature1",
+      "description": "A person using a smartphone with a health app interface.",
+      "imageUrl": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoZWFsdGglMjBhcHB8ZW58MHx8fHwxNzYwODc3MTg5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "health app"
+    },
+    {
+      "id": "feature2",
+      "description": "A doctor consulting with a patient via video call on a tablet.",
+      "imageUrl": "https://images.unsplash.com/photo-1758691461932-d0aa0ebf6b31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx0ZWxlbWVkaWNpbmUlMjBjb25zdWx0YXRpb258ZW58MHx8fHwxNzYwODc3MTg5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "telemedicine consultation"
+    },
+    {
+      "id": "testimonial1",
+      "description": "Avatar for Sarah J.",
+      "imageUrl": "https://images.unsplash.com/photo-1610655507808-a59293f4e332?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MDgzNjQ2Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "testimonial2",
+      "description": "Avatar for David L.",
+      "imageUrl": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "testimonial3",
+      "description": "Avatar for Maria G.",
+      "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzYwODE5MTcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman smiling"
+    },
+    {
+      "id": "article_diabetes",
+      "description": "Healthy foods like vegetables and fruits.",
+      "imageUrl": "https://images.unsplash.com/photo-1556386734-4227a180d19e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoZWFsdGh5JTIwZm9vZHxlbnwwfHx8fDE3NjA4NDI0ODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "healthy food"
+    },
+    {
+      "id": "article_hypertension",
+      "description": "A person checking their blood pressure with a home monitor.",
+      "imageUrl": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxibG9vZCUyMHByZXNzdXJlfGVufDB8fHx8MTc2MDgxMzk1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "blood pressure"
+    },
+    {
+      "id": "article_heart",
+      "description": "A person on a run in a park at sunrise.",
+      "imageUrl": "https://images.unsplash.com/photo-1474465847590-4d2b58fe9afb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxydW5uaW5nJTIwcGFya3xlbnwwfHx8fDE3NjA4NDQzNjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "running park"
+    },
+    {
+      "id": "article_nutrition",
+      "description": "A colorful salad in a bowl.",
+      "imageUrl": "https://images.unsplash.com/photo-1546069901-d5bfd2cbfb1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzYWxhZCUyMGJvd2x8ZW58MHx8fHwxNzYwODM3MzM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "salad bowl"
+    },
+    {
+      "id": "provider1",
+      "description": "Profile picture of Dr. Emily Carter.",
+      "imageUrl": "https://images.unsplash.com/photo-1605826891981-644e2973d569?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkb2N0b3IlMjB3b21hbnxlbnwwfHx8fDE3NjA4NTI2NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor woman"
+    },
+    {
+      "id": "provider2",
+      "description": "Profile picture of Dr. Ben Adams.",
+      "imageUrl": "https://images.unsplash.com/photo-1631558554770-74e921444006?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkb2N0b3IlMjBtYW58ZW58MHx8fHwxNzYwODYzOTI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor man"
+    },
+    {
+      "id": "article_exercise1",
+      "description": "A person lifting weights in a gym.",
+      "imageUrl": "https://images.unsplash.com/photo-1609899464726-209befaac5bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBsaWZ0aW5nJTIwd2VpZ2h0c3xlbnwwfHx8fDE3NjA4Nzg5MDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person lifting weights"
+    },
+    {
+      "id": "article_cholesterol",
+      "description": "A vile of blood for a blood test.",
+      "imageUrl": "https://images.unsplash.com/photo-1599556147783-7edf67c327e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxibG9vZCUyMHRlc3R8ZW58MHx8fHwxNzYwODc4OTA0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "blood test"
+    },
+    {
+      "id": "article_mindful_eating",
+      "description": "A person meditating in front of a healthy meal.",
+      "imageUrl": "https://images.unsplash.com/photo-1636036175498-ffaae32ac497?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwZXJzb24lMjBtZWRpdGF0aW5nJTIwZm9vZHxlbnwwfHx8fDE3NjA4Nzg5MDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person meditating food"
+    },
+    {
+      "id": "article_hiit",
+      "description": "A person sprinting on a track.",
+      "imageUrl": "https://images.unsplash.com/photo-1738495632412-eab7c543bc25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwZXJzb24lMjBzcHJpbnRpbmclMjB0cmFja3xlbnwwfHx8fDE3NjA4Nzg5MDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person sprinting track"
+    }
+  ]
+}
