@@ -1,3 +1,6 @@
+
+"use client";
+
 import Image from "next/image";
 import { format } from "date-fns";
 import { Appointment } from "@/lib/types";
@@ -7,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Clock, MapPin, Video } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface AppointmentCardProps {
   appointment: Appointment;
@@ -22,7 +26,19 @@ export function AppointmentCard({ appointment }: AppointmentCardProps) {
     status,
     reason,
   } = appointment;
-  const isPast = new Date(dateTime) < new Date();
+
+  const [isPast, setIsPast] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    setIsPast(new Date(dateTime) < new Date());
+  }, [dateTime]);
+
+  if (!isMounted) {
+    // Render a placeholder or null on the server to avoid hydration mismatch
+    return null;
+  }
 
   const statusColors: { [key: string]: string } = {
     Scheduled: "bg-blue-100 text-blue-800",
