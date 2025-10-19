@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import i18n from '@/lib/i18n';
-import { FirebaseClientProvider } from '@/firebase';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 
 const ptSans = PT_Sans({

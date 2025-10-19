@@ -29,6 +29,7 @@ export function AppHeader() {
   const userInitials = user?.displayName?.split(' ').map(n => n[0]).join('') || user?.email?.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
+    if (!auth) return;
     await signOut(auth);
     router.push('/');
   };
@@ -84,7 +85,7 @@ export function AppHeader() {
               <Link href="/profile"><UserIcon className="mr-2 h-4 w-4" /><span>Profile</span></Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/profile"><Settings className="mr-2 h-4 w-4" /><span>Settings</span></Link>
+              <Link href="/settings"><Settings className="mr-2 h-4 w-4" /><span>Settings</span></Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/help"><LifeBuoy className="mr-2 h-4 w-4" /><span>Help/Support</span></Link>
