@@ -100,7 +100,7 @@ export function ProfileForm() {
   const watchName = form.watch("personal.name");
   const watchEmail = form.watch("personal.email");
 
-  const userInitials = watchName?.split(' ').map(n => n[0]).join('') || "";
+  const userInitials = (watchName || '').split(' ').map(n => n[0]).join('');
 
   useEffect(() => {
     if (watchHeight > 0 && watchWeight > 0) {
@@ -233,7 +233,7 @@ export function ProfileForm() {
             <CardDescription>
               Manage your application preferences.
             </CardDescription>
-          </Header>
+          </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center justify-between rounded-lg border p-4">
               <div className="space-y-0.5">
@@ -273,7 +273,7 @@ export function ProfileForm() {
             <CardDescription>
               Manage your account data and privacy settings.
             </CardDescription>
-          </Header>
+          </CardHeader>
           <CardContent className="space-y-4">
               <Button variant="outline">Export My Data</Button>
               <AlertDialog>
@@ -301,3 +301,5 @@ export function ProfileForm() {
     </Tabs>
   );
 }
+
+    
