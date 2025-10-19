@@ -40,11 +40,11 @@ const chatFlow = ai.defineFlow(
     outputSchema: ChatbotOutputSchema,
   },
   async (input) => {
-    const { history, prompt } = input;
+    const { history } = input;
 
     const llmResponse = await ai.generate({
-      prompt: prompt,
-      history: history,
+      prompt: history[history.length - 1].content,
+      history: history.slice(0, -1),
       model: 'googleai/gemini-2.5-flash',
     });
 
