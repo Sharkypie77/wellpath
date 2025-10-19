@@ -1,4 +1,5 @@
-"use client"
+
+"use client";
 
 import {
   Card,
@@ -15,7 +16,7 @@ export default function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-4">
-        <h1 className="text-3xl font-bold tracking-tight font-headline">Profile & Settings</h1>
+        <h1 className="text-3xl font-bold tracking-tight font-headline">Profile</h1>
         <p className="text-muted-foreground">
           Manage your personal information, health history, and preferences.
         </p>

@@ -109,7 +109,7 @@ export function ProfileForm() {
   const watchWeight = form.watch("personal.weight");
   const watchName = form.watch("personal.name");
   const watchEmail = form.watch("personal.email");
-  const userInitials = (watchName || '').split(' ').map(n => n[0]).join('') || (watchEmail || '').charAt(0).toUpperCase();
+  const userInitials = (watchName || '').split(' ').map(n => n[0]).join('').toUpperCase() || (watchEmail || '').charAt(0).toUpperCase() || 'U';
 
 
   useEffect(() => {

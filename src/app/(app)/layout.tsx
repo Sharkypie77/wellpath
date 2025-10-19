@@ -48,7 +48,6 @@ const menuItems = [
 
 const bottomMenuItems = [
   { href: "/profile", icon: User, label: "Profile" },
-  { href: "/settings", icon: Settings, label: "Settings" },
   { href: "/help", icon: LifeBuoy, label: "Help & Support" },
 ]
 
