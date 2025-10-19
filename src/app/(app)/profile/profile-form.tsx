@@ -99,8 +99,8 @@ export function ProfileForm() {
   const watchWeight = form.watch("personal.weight");
   const watchName = form.watch("personal.name");
   const watchEmail = form.watch("personal.email");
-
   const userInitials = (watchName || '').split(' ').map(n => n[0]).join('');
+
 
   useEffect(() => {
     if (watchHeight > 0 && watchWeight > 0) {
@@ -301,5 +301,3 @@ export function ProfileForm() {
     </Tabs>
   );
 }
-
-    

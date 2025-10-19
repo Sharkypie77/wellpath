@@ -85,7 +85,7 @@ export default function LandingPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                  <Link href="/dashboard">
+                  <Link href="/login">
                     Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
@@ -227,7 +227,7 @@ export default function LandingPage() {
                 Join WellPath today and start your journey to a healthier, more informed life.
               </p>
               <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                <Link href="/dashboard">
+                <Link href="/login">
                   Create Your Free Account
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>

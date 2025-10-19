@@ -21,7 +21,7 @@ export function LandingHeader() {
       <Link href="/" className="flex items-center justify-center">
         <Logo />
       </Link>
-      <nav className="ml-auto hidden lg:flex gap-4 sm:gap-6">
+      <nav className="ml-auto hidden lg:flex gap-4 sm:gap-6 items-center">
         {navLinks.map((link) => (
           <Link
             key={link.href}
@@ -31,8 +31,11 @@ export function LandingHeader() {
             {link.label}
           </Link>
         ))}
+        <Button variant="ghost" asChild>
+            <Link href="/login">Sign In</Link>
+        </Button>
         <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-          <Link href="/dashboard">Get Started</Link>
+          <Link href="/login">Get Started</Link>
         </Button>
       </nav>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -58,7 +61,7 @@ export function LandingHeader() {
               </Link>
             ))}
              <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground mt-4">
-              <Link href="/dashboard">Get Started</Link>
+              <Link href="/login">Get Started</Link>
             </Button>
           </nav>
         </SheetContent>
