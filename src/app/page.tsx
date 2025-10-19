@@ -32,7 +32,7 @@ const testimonials = [
     role: "Working Mom",
     avatar: placeholderImages.find(p => p.id === "testimonial1")?.imageUrl || "",
     avatarFallback: "SJ",
-    text: "HealthWise Hub has been a game-changer for managing my family's health. The reminders and educational content are invaluable.",
+    text: "WellPath has been a game-changer for managing my family's health. The reminders and educational content are invaluable.",
   },
   {
     name: "David L.",
@@ -46,7 +46,7 @@ const testimonials = [
     role: "Fitness Enthusiast",
     avatar: placeholderImages.find(p => p.id === "testimonial3")?.imageUrl || "",
     avatarFallback: "MG",
-    text: "I love tracking my progress and setting new goals. HealthWise Hub makes staying healthy feel rewarding and fun.",
+    text: "I love tracking my progress and setting new goals. WellPath makes staying healthy feel rewarding and fun.",
   },
 ];
 
@@ -63,7 +63,7 @@ export default function LandingPage() {
                 Your Partner in Preventive Healthcare
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                HealthWise Hub provides the tools and knowledge to take control of your well-being, focusing on prevention and education.
+                WellPath provides the tools and knowledge to take control of your well-being, focusing on prevention and education.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
@@ -175,7 +175,7 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Trusted by Users Everywhere</h2>
             <p className="max-w-[600px] mx-auto text-center mt-4 text-muted-foreground md:text-xl/relaxed">
-              Hear what our community has to say about their journey with HealthWise Hub.
+              Hear what our community has to say about their journey with WellPath.
             </p>
             <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-2 md:gap-12 lg:max-w-none lg:grid-cols-3 mt-12">
               {testimonials.map((testimonial) => (
@@ -206,7 +206,7 @@ export default function LandingPage() {
             <div className="max-w-3xl mx-auto space-y-4">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline">Take the First Step Towards Better Health</h2>
               <p className="text-muted-foreground md:text-xl">
-                Join HealthWise Hub today and start your journey to a healthier, more informed life.
+                Join WellPath today and start your journey to a healthier, more informed life.
               </p>
               <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
                 <Link href="/dashboard">

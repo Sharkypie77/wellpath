@@ -12,7 +12,7 @@ const ptSans = PT_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'HealthWise Hub',
+  title: 'WellPath',
   description: 'Your partner in preventive care and health education.',
 };
 

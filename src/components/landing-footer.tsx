@@ -32,7 +32,7 @@ export function LandingFooter() {
         </div>
       </div>
       <div className="container max-w-7xl mt-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} HealthWise Hub. All rights reserved.
+        © {new Date().getFullYear()} WellPath. All rights reserved.
       </div>
     </footer>
   );
