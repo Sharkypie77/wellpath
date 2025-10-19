@@ -1,15 +1,4 @@
-import {
-  Activity,
-  ArrowUpRight,
-  CalendarClock,
-  HeartPulse,
-  Ruler,
-  Scale,
-  Thermometer,
-} from "lucide-react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,109 +7,83 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { mockAppointments, mockHealthMetrics, mockUser, placeholderImages } from "@/lib/data";
-import HealthMetricCard from "@/components/health-metric-card";
-import { HealthCharts } from "@/components/health-charts";
+import { mockDashboardMetrics, mockUser, mockHealthTips } from "@/lib/data";
+import DashboardMetricCard from "@/components/dashboard-metric-card";
+import { Activity, CalendarPlus, Lightbulb, PlusCircle } from "lucide-react";
+import { format } from "date-fns";
 
 export default function Dashboard() {
-  const upcomingAppointments = mockAppointments.filter(
-    (a) => a.status === "Scheduled"
-  );
+  const today = new Date();
+  
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <main className="flex flex-1 flex-col gap-4 md:gap-8">
-        <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-          <HealthMetricCard
-            title="Blood Pressure"
-            value={`${mockHealthMetrics[0].value.systolic}/${mockHealthMetrics[0].value.diastolic}`}
-            unit={mockHealthMetrics[0].unit}
-            icon={<HeartPulse />}
-          />
-          <HealthMetricCard
-            title="Glucose"
-            value={mockHealthMetrics[1].value.toString()}
-            unit={mockHealthMetrics[1].unit}
-            icon={<Thermometer />}
-          />
-          <HealthMetricCard
-            title="Weight"
-            value={mockHealthMetrics[2].value.toString()}
-            unit={mockHealthMetrics[2].unit}
-            icon={<Scale />}
-          />
-          <HealthMetricCard
-            title="BMI"
-            value={mockHealthMetrics[3].value.toString()}
-            unit={mockHealthMetrics[3].unit}
-            icon={<Ruler />}
-          />
+      <main className="flex flex-1 flex-col gap-6 md:gap-8">
+        {/* Welcome Section */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <div className="space-y-1">
+                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight font-headline">
+                    Welcome back, {mockUser.name.split(' ')[0]}!
+                </h1>
+                <p className="text-muted-foreground">
+                    {format(today, "EEEE, MMMM dd, yyyy")}
+                </p>
+            </div>
         </div>
-        <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-          <Card className="xl:col-span-2">
-            <CardHeader className="flex flex-row items-center">
-              <div className="grid gap-2">
-                <CardTitle>Health Progress</CardTitle>
-                <CardDescription>
-                  Recent trends in your key health metrics.
-                </CardDescription>
-              </div>
-              <Button asChild size="sm" className="ml-auto gap-1">
-                <Link href="#">
-                  View All
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </CardHeader>
-            <CardContent>
-              <HealthCharts />
-            </CardContent>
-          </Card>
-          <Card>
+
+        {/* Health Metrics Grid */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {mockDashboardMetrics.map((metric) => (
+            <DashboardMetricCard key={metric.type} metric={metric} />
+          ))}
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {/* Quick Actions */}
+          <Card className="lg:col-span-1">
             <CardHeader>
-              <CardTitle>Upcoming Appointments</CardTitle>
+              <CardTitle>Quick Actions</CardTitle>
               <CardDescription>
-                You have {upcomingAppointments.length} upcoming appointments.
+                Log metrics, book appointments, or get tips.
               </CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-8">
-              {upcomingAppointments.map((appt) => {
-                const providerImage = placeholderImages.find(p => p.id === `provider${appt.providerId.split('-')[1]}`)
-                return (
-                  <div key={appt.id} className="flex items-center gap-4">
-                    <Avatar className="hidden h-9 w-9 sm:flex">
-                       <AvatarImage src={providerImage?.imageUrl} alt={appt.providerName} />
-                      <AvatarFallback>{appt.providerName.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="grid gap-1">
-                      <p className="text-sm font-medium leading-none">
-                        {appt.providerName}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {appt.providerSpecialty}
-                      </p>
-                    </div>
-                    <div className="ml-auto font-medium text-sm text-right">
-                      <div>{appt.dateTime.toLocaleDateString()}</div>
-                      <div className="text-muted-foreground">{appt.dateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-                    </div>
-                  </div>
-                )
-              })}
-            </CardContent>
-            <CardContent>
-               <Button asChild size="sm" className="w-full">
-                <Link href="/appointments">
-                  Book New Appointment
+            <CardContent className="flex flex-col gap-4">
+              <Button asChild>
+                <Link href="#">
+                  <PlusCircle className="mr-2" /> Log New Metric
                 </Link>
               </Button>
+              <Button asChild variant="secondary">
+                <Link href="/appointments">
+                  <CalendarPlus className="mr-2" /> Schedule Appointment
+                </Link>
+              </Button>
+              <Button asChild variant="secondary">
+                <Link href="/education">
+                  <Lightbulb className="mr-2" /> View Health Tips
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Today's Health Tips */}
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <CardTitle>Today's Health Tips</CardTitle>
+               <CardDescription>
+                A few small things you can do today for a healthier tomorrow.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-4">
+                {mockHealthTips.map((tip, index) => (
+                  <li key={index} className="flex items-start gap-4">
+                    <Activity className="w-5 h-5 mt-1 text-primary flex-shrink-0" />
+                    <p className="text-sm text-muted-foreground">
+                      {tip}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         </div>

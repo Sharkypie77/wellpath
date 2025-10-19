@@ -1,4 +1,4 @@
-import type { User, HealthMetric, Appointment, Medication, Article } from './types';
+import type { User, HealthMetric, Appointment, Medication, Article, DashboardMetric } from './types';
 import placeholderData from './placeholder-images.json';
 
 export const placeholderImages = placeholderData.placeholderImages;
@@ -10,7 +10,7 @@ export const mockUser: User = {
   age: 34,
   gender: 'Male',
   height: 180,
-  weight: 75,
+  weight: 70,
   bloodType: 'O+',
   emergencyContact: {
     name: 'Jane Doe',
@@ -20,6 +20,43 @@ export const mockUser: User = {
   medicalHistory: ['Asthma'],
   allergies: ['Pollen'],
 };
+
+export const mockDashboardMetrics: DashboardMetric[] = [
+  {
+    type: 'Blood Pressure',
+    value: '120/80',
+    unit: 'mmHg',
+    status: 'Normal',
+    trend: 'stable',
+  },
+  {
+    type: 'Glucose',
+    value: '95',
+    unit: 'mg/dL',
+    status: 'Normal',
+    trend: 'down',
+  },
+  {
+    type: 'Weight',
+    value: '70',
+    unit: 'kg (BMI: 21.6)',
+    status: 'Normal',
+    trend: 'stable',
+  },
+  {
+    type: 'Heart Rate',
+    value: '72',
+    unit: 'bpm',
+    status: 'Normal',
+    trend: 'up',
+  },
+]
+
+export const mockHealthTips: string[] = [
+    "Stay hydrated by drinking at least 8 glasses of water a day.",
+    "Incorporate at least 30 minutes of moderate exercise into your daily routine.",
+    "Aim for 7-9 hours of quality sleep each night for better recovery and mental health."
+]
 
 export const mockHealthMetrics: HealthMetric[] = [
   {
@@ -42,7 +79,7 @@ export const mockHealthMetrics: HealthMetric[] = [
     id: 'metric-3',
     userId: 'user-123',
     type: 'Weight',
-    value: 75,
+    value: 70,
     unit: 'kg',
     timestamp: new Date('2023-10-01T08:00:00Z'),
   },
@@ -50,8 +87,16 @@ export const mockHealthMetrics: HealthMetric[] = [
     id: 'metric-4',
     userId: 'user-123',
     type: 'BMI',
-    value: 23.1,
+    value: 21.6,
     unit: '',
+    timestamp: new Date('2023-10-01T08:00:00Z'),
+  },
+   {
+    id: 'metric-5',
+    userId: 'user-123',
+    type: 'Heart Rate',
+    value: 72,
+    unit: 'bpm',
     timestamp: new Date('2023-10-01T08:00:00Z'),
   },
 ];

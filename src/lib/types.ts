@@ -18,10 +18,12 @@ export interface User {
   allergies: string[];
 }
 
+export type HealthMetricType = 'Blood Pressure' | 'Glucose' | 'Weight' | 'BMI' | 'Heart Rate';
+
 export interface HealthMetric {
   id: string;
   userId: string;
-  type: 'Blood Pressure' | 'Glucose' | 'Weight' | 'BMI' | 'Heart Rate';
+  type: HealthMetricType;
   value: number | { systolic: number; diastolic: number };
   unit: string;
   timestamp: Date;
@@ -114,3 +116,15 @@ export const DailyQuizQuestionOutputSchema = z.object({
   explanation: z.string().describe('A brief explanation of the correct answer.'),
 });
 export type DailyQuizQuestionOutput = z.infer<typeof DailyQuizQuestionOutputSchema>;
+
+// New types for the new Dashboard
+export type MetricStatus = 'Normal' | 'Warning' | 'Alert';
+export type Trend = 'up' | 'down' | 'stable';
+
+export interface DashboardMetric {
+  type: HealthMetricType;
+  value: string;
+  unit: string;
+  status: MetricStatus;
+  trend: Trend;
+}
