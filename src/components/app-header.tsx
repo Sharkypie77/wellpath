@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { useAuth, useUser } from "@/firebase"
+import { useAuth, useUser } from "@/firebase/provider"
 import { signOut } from "firebase/auth"
 
 export function AppHeader() {

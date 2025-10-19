@@ -24,7 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Logo } from "./logo"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/firebase"
+import { useAuth } from "@/firebase/provider"
 import { Github, Linkedin, Mail } from "lucide-react"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
 
