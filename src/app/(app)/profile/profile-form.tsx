@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
-import { useAuth, useFirestore, useUser } from "@/firebase";
+import { useFirestore, useUser, useDoc, useMemoFirebase } from "@/firebase";
 import { doc } from "firebase/firestore";
 import { setDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 
@@ -68,6 +68,13 @@ export function ProfileForm() {
   const { user } = useUser();
   const firestore = useFirestore();
 
+  const userDocRef = useMemoFirebase(() => {
+    if (!user || !firestore) return null;
+    return doc(firestore, 'users', user.uid);
+  }, [user, firestore]);
+
+  const { data: userProfile, isLoading: isProfileLoading } = useDoc<ProfileFormData['personal']>(userDocRef);
+
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -85,29 +92,25 @@ export function ProfileForm() {
   });
 
   useEffect(() => {
-    if (user) {
-      // Once user is available, you could fetch their profile from Firestore
-      // For now, we'll just populate the email and name
+    if (userProfile) {
+      form.reset({ personal: userProfile });
+    } else if (user) {
       form.reset({
         personal: {
+          ...form.getValues().personal,
           name: user.displayName || "",
           email: user.email || "",
-          age: 0,
-          gender: "Male",
-          phone: "",
-          height: 0,
-          weight: 0,
-          bloodType: "Unknown",
-        },
+        }
       });
     }
-  }, [user, form]);
+  }, [user, userProfile, form]);
+
 
   const watchHeight = form.watch("personal.height");
   const watchWeight = form.watch("personal.weight");
   const watchName = form.watch("personal.name");
   const watchEmail = form.watch("personal.email");
-  const userInitials = (watchName || '').split(' ').map(n => n[0]).join('');
+  const userInitials = (watchName || '').split(' ').map(n => n[0]).join('') || (watchEmail || '').charAt(0).toUpperCase();
 
 
   useEffect(() => {
@@ -121,7 +124,7 @@ export function ProfileForm() {
   }, [watchHeight, watchWeight]);
 
   function onSubmit(data: ProfileFormData) {
-    if (!user) {
+    if (!userDocRef) {
       toast({
         variant: "destructive",
         title: "Not Authenticated",
@@ -131,13 +134,7 @@ export function ProfileForm() {
     }
 
     setIsSaving(true);
-    const profileRef = doc(firestore, "users", user.uid);
-    setDocumentNonBlocking(profileRef, data.personal, { merge: true });
-
-    toast({
-      title: "Profile Saving...",
-      description: "Your information is being saved.",
-    });
+    setDocumentNonBlocking(userDocRef, data.personal, { merge: true });
 
     // Since it's non-blocking, we can give immediate feedback.
     // A more robust solution might listen for the write result.
@@ -148,6 +145,10 @@ export function ProfileForm() {
             description: "Your personal information has been updated.",
         });
     }, 1000);
+  }
+
+  if (isProfileLoading) {
+    return <div className="flex justify-center items-center p-8"><Loader2 className="w-8 h-8 animate-spin" /></div>;
   }
 
   return (
@@ -165,7 +166,7 @@ export function ProfileForm() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
             <div className="flex items-center gap-6">
               <Avatar className="h-20 w-20">
-                <AvatarImage src={user?.photoURL || "/avatars/01.png"} alt={watchName} />
+                <AvatarImage src={user?.photoURL || undefined} alt={watchName} />
                 <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
               <div className="space-y-1">

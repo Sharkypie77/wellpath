@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -28,6 +29,7 @@ import {
   initiateEmailSignUp,
 } from "@/firebase/non-blocking-login"
 import { Github, Linkedin, Mail } from "lucide-react"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 
 
 const loginSchema = z.object({
@@ -91,10 +93,10 @@ export function AuthTabs() {
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
     setIsSubmitting(true);
     try {
-      initiateEmailSignIn(auth, values.email, values.password);
+      await signInWithEmailAndPassword(auth, values.email, values.password);
       toast({
-        title: "Login Attempted",
-        description: "Check your authentication state.",
+        title: "Login Successful",
+        description: "Redirecting to your dashboard.",
       });
       router.push("/dashboard");
     } catch (error: any) {
@@ -111,10 +113,10 @@ export function AuthTabs() {
   const onSignupSubmit = async (values: z.infer<typeof signupSchema>) => {
     setIsSubmitting(true);
     try {
-      initiateEmailSignUp(auth, values.email, values.password);
+      await createUserWithEmailAndPassword(auth, values.email, values.password);
       toast({
         title: "Signup Successful",
-        description: "Your account has been created.",
+        description: "Your account has been created. Please log in.",
       });
       setActiveTab("login");
     } catch (error: any) {

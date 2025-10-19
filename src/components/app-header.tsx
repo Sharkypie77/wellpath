@@ -1,5 +1,9 @@
+
+"use client"
+
 import Link from "next/link"
 import { Bell, LifeBuoy, LogOut, Search, Settings, User as UserIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,10 +18,29 @@ import {
 import { Input } from "@/components/ui/input"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { mockUser } from "@/lib/data"
+import { useAuth, useUser } from "@/firebase"
+import { signOut } from "firebase/auth"
 
 export function AppHeader() {
-  const userInitials = mockUser.name.split(' ').map(n => n[0]).join('');
+  const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+  const router = useRouter();
+
+  const userInitials = user?.displayName?.split(' ').map(n => n[0]).join('') || user?.email?.charAt(0).toUpperCase();
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push('/');
+  };
+
+  if (isUserLoading) {
+    return (
+      <header className="flex h-14 items-center gap-4 border-b bg-card px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
+        {/* Skeleton or loading state can be placed here */}
+      </header>
+    );
+  }
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-card px-4 lg:h-[60px] lg:px-6 sticky top-0 z-30">
       <SidebarTrigger className="md:hidden" />
@@ -41,7 +64,7 @@ export function AppHeader() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-9 w-9">
-              <AvatarImage src="/avatars/01.png" alt={mockUser.name} />
+              <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || ""} />
               <AvatarFallback>{userInitials}</AvatarFallback>
             </Avatar>
           </Button>
@@ -49,9 +72,9 @@ export function AppHeader() {
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">{mockUser.name}</p>
+              <p className="text-sm font-medium leading-none">{user?.displayName}</p>
               <p className="text-xs leading-none text-muted-foreground">
-                {mockUser.email}
+                {user?.email}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -68,8 +91,8 @@ export function AppHeader() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href="/"><LogOut className="mr-2 h-4 w-4" /><span>Log out</span></Link>
+          <DropdownMenuItem onClick={handleLogout}>
+            <LogOut className="mr-2 h-4 w-4" /><span>Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
