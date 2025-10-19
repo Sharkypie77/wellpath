@@ -82,9 +82,7 @@ export function AuthTabs() {
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
     console.log("Login values:", values)
     // Simulate API call
-    loginForm.formState.isSubmitting = true
     await new Promise(resolve => setTimeout(resolve, 1500))
-    loginForm.formState.isSubmitting = false
     toast({
       title: "Login Successful",
       description: "Welcome back!",
@@ -95,9 +93,7 @@ export function AuthTabs() {
   const onSignupSubmit = async (values: z.infer<typeof signupSchema>) => {
     console.log("Signup values:", values)
     // Simulate API call
-    signupForm.formState.isSubmitting = true
     await new Promise(resolve => setTimeout(resolve, 1500))
-    signupForm.formState.isSubmitting = false
     toast({
       title: "Account Created",
       description: "You have successfully signed up.",
