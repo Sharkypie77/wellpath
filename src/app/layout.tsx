@@ -8,6 +8,7 @@ import './globals.css';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import i18n from '@/lib/i18n';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { ThemeProvider } from '@/components/theme-provider';
 
 
 const inter = Inter({
@@ -44,11 +45,17 @@ export default function RootLayout({
         <Suspense fallback={<div>Loading...</div>}>
           <I18nextProvider i18n={i18n}>
             <LanguageManager>
-              <FirebaseClientProvider>
-                {children}
-              </FirebaseClientProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <FirebaseClientProvider>
+                  {children}
+                </FirebaseClientProvider>
+                <Toaster />
+              </ThemeProvider>
             </LanguageManager>
-            <Toaster />
           </I18nextProvider>
         </Suspense>
       </body>

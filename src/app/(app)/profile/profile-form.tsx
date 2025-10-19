@@ -28,8 +28,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,6 +43,7 @@ import { Loader2 } from "lucide-react";
 import { useFirestore, useUser, useMemoFirebase } from "@/firebase/provider";
 import { useDoc } from "@/firebase/firestore/use-doc";
 import { doc, setDoc } from "firebase/firestore";
+import { SettingsContent } from "./settings-content";
 
 const profileSchema = z.object({
   personal: z.object({
@@ -257,43 +256,7 @@ export function ProfileForm() {
       </TabsContent>
 
       <TabsContent value="settings">
-         <Card className="mt-6">
-          <CardHeader>
-            <CardTitle>Settings</CardTitle>
-            <CardDescription>
-              Manage your application preferences.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <Label htmlFor="dark-mode">Dark Mode</Label>
-                <p className="text-xs text-muted-foreground">
-                  Enable or disable the dark theme.
-                </p>
-              </div>
-              <Switch id="dark-mode" />
-            </div>
-             <div className="flex items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <Label htmlFor="reminders">Medication Reminders</Label>
-                 <p className="text-xs text-muted-foreground">
-                  Receive push notifications for your medications.
-                </p>
-              </div>
-              <Switch id="reminders" defaultChecked />
-            </div>
-             <div className="flex items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <Label htmlFor="health-tips">Health Tips</Label>
-                 <p className="text-xs text-muted-foreground">
-                  Get daily tips for a healthier lifestyle.
-                </p>
-              </div>
-              <Switch id="health-tips" defaultChecked/>
-            </div>
-          </CardContent>
-        </Card>
+         <SettingsContent />
       </TabsContent>
       
       <TabsContent value="privacy">
