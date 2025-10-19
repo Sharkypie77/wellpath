@@ -1,3 +1,5 @@
+import {z} from 'genkit';
+
 export interface User {
   id: string;
   name: string;
@@ -69,6 +71,8 @@ export interface HealthRiskAssessment {
     personal: {
         age: number;
         gender: 'Male' | 'Female' | 'Other';
+        weight: number;
+        height: number;
     };
     lifestyle: {
         smoking: 'never' | 'former' | 'current';
@@ -76,6 +80,25 @@ export interface HealthRiskAssessment {
         exercise: 'never' | '1-2' | '3-4' | '5+';
     };
     history: {
-        familyHistory: ('diabetes' | 'hypertension' | 'heart-disease')[];
+        familyHistory: string[];
+        conditions?: string;
     };
 }
+
+
+export const ChatbotMessageSchema = z.object({
+  role: z.enum(['user', 'model']),
+  content: z.string(),
+});
+export type ChatbotMessage = z.infer<typeof ChatbotMessageSchema>;
+
+export const ChatbotInputSchema = z.object({
+  history: z.array(ChatbotMessageSchema),
+  prompt: z.string(),
+});
+export type ChatbotInput = z.infer<typeof ChatbotInputSchema>;
+
+export const ChatbotOutputSchema = z.object({
+  response: z.string(),
+});
+export type ChatbotOutput = z.infer<typeof ChatbotOutputSchema>;

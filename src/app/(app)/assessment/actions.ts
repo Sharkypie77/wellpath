@@ -7,7 +7,7 @@ import {
 import { HealthRiskAssessment } from "@/lib/types";
 
 export async function getHealthRecommendations(
-  data: HealthRiskAssessment
+  data: Omit<HealthRiskAssessment, 'personal'> & { personal: HealthRiskAssessment['personal'] & { weight: number; height: number } }
 ): Promise<{ recommendations: string }> {
   const { personal, lifestyle, history } = data;
 

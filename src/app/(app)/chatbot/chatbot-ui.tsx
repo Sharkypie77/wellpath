@@ -4,7 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, User, Bot } from "lucide-react";
-import { chat, type ChatbotMessage } from "@/ai/flows/chatbot";
+import { chat } from "@/ai/flows/chatbot";
+import type { ChatbotMessage } from "@/lib/types";
+
 
 export function ChatbotUI() {
   const [messages, setMessages] = useState<ChatbotMessage[]>([]);
