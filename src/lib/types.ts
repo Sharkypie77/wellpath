@@ -49,6 +49,7 @@ export interface Appointment {
   providerId: string;
   providerName: string;
   providerSpecialty: string;
+  providerImage: string;
   type: 'Telemedicine' | 'In-Person';
   dateTime: Date;
   duration: number; // in minutes
