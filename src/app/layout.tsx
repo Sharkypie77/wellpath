@@ -2,8 +2,7 @@
 "use client";
 
 import { Suspense, useEffect } from 'react';
-import type { Metadata } from 'next';
-import { PT_Sans } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 import { I18nextProvider, useTranslation } from 'react-i18next';
@@ -11,13 +10,10 @@ import i18n from '@/lib/i18n';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 
-const ptSans = PT_Sans({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
   display: 'swap',
-  variable: '--font-pt-sans',
-  preload: true,
+  variable: '--font-inter',
 });
 
 // This component is needed to set the dir and lang attributes on the html tag
@@ -44,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${ptSans.variable} font-body antialiased`}>
+      <body className={`${inter.variable} font-body antialiased`}>
         <Suspense fallback={<div>Loading...</div>}>
           <I18nextProvider i18n={i18n}>
             <LanguageManager>
