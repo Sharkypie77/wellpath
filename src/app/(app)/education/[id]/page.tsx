@@ -1,3 +1,5 @@
+"use client"
+
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,6 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { format } from 'date-fns';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+export const dynamic = 'force-dynamic';
 
 export default function ArticleDetailPage({ params }: { params: { id: string } }) {
   const article = mockArticles.find((a) => a.id === params.id);
@@ -35,7 +39,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                 <Badge key={tag} variant="secondary" className="capitalize">{tag}</Badge>
               ))}
             </div>
-            <h1 className="text-4xl font-bold tracking-tight font-headline">{article.title}</h1>
+            <h1 className="text-4xl font-bold tracking-tighter font-headline">{article.title}</h1>
             <p className="text-muted-foreground text-sm">
               By {article.author} on {format(article.publishDate, 'MMMM dd, yyyy')}
             </p>

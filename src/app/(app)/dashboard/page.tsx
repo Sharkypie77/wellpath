@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +13,8 @@ import { mockDashboardMetrics, mockUser, mockHealthTips } from "@/lib/data";
 import DashboardMetricCard from "@/components/dashboard-metric-card";
 import { Activity, CalendarPlus, Lightbulb, PlusCircle } from "lucide-react";
 import { format } from "date-fns";
+
+export const dynamic = 'force-dynamic';
 
 export default function Dashboard() {
   const today = new Date();

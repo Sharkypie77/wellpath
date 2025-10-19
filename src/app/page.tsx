@@ -12,6 +12,9 @@ import { LandingHeader } from "@/components/landing-header";
 import { LandingFooter } from "@/components/landing-footer";
 import { placeholderImages } from "@/lib/data";
 import { SplashScreen } from "@/components/splash-screen";
+import dynamic from "next/dynamic";
+
+export const dynamic = 'force-dynamic';
 
 const features = [
   {
@@ -55,13 +58,13 @@ const testimonials = [
   },
 ];
 
+const DynamicSplashScreen = dynamic(() => import('@/components/splash-screen').then(mod => mod.SplashScreen), { ssr: false });
+
 export default function LandingPage() {
   const [showSplash, setShowSplash] = useState(true);
   const heroImage = placeholderImages.find(p => p.id === "hero");
 
   useEffect(() => {
-    // This effect ensures that the splash screen is only shown once on the client-side.
-    // It uses a session storage item to "remember" if the user has seen it.
     if (sessionStorage.getItem("splashScreenSeen")) {
       setShowSplash(false);
     } else {
@@ -70,8 +73,7 @@ export default function LandingPage() {
   }, []);
 
   if (showSplash) {
-    // Show splash screen only on initial client-side render if not seen before
-    return <SplashScreen onFinished={() => setShowSplash(false)} />;
+    return <DynamicSplashScreen onFinished={() => setShowSplash(false)} />;
   }
   
   return (

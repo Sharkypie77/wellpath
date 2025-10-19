@@ -4,6 +4,8 @@
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
 
+export const dynamic = 'force-dynamic';
+
 const AuthTabs = dynamic(() => import('@/components/auth-tabs').then(mod => mod.AuthTabs), {
   ssr: false,
   loading: () => <Skeleton className="w-full h-[600px]" />,

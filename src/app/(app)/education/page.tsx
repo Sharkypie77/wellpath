@@ -18,6 +18,8 @@ import { Article, ArticleCategory } from "@/lib/types";
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+export const dynamic = 'force-dynamic';
+
 export default function EducationPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<ArticleCategory | "All">("All");

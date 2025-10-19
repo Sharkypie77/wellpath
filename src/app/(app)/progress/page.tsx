@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from '@/components/ui/skeleton';
 
+export const dynamic = 'force-dynamic';
+
 const HealthCharts = dynamic(() => import('@/components/health-charts').then(mod => mod.HealthCharts), {
   ssr: false,
   loading: () => <Skeleton className="h-[250px] w-full" />

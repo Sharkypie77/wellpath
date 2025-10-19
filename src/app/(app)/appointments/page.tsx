@@ -14,6 +14,8 @@ import { mockAppointments } from "@/lib/data"
 import { AppointmentCard } from "@/components/appointment-card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+export const dynamic = 'force-dynamic';
+
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState(mockAppointments);
 

@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from '@/components/ui/skeleton';
 
+export const dynamic = 'force-dynamic';
+
 const AssessmentForm = dynamic(() => import('./assessment-form').then(mod => mod.AssessmentForm), { 
   ssr: false,
   loading: () => <AssessmentFormSkeleton />

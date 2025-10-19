@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Card,
   CardContent,
@@ -6,6 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ProfileForm } from "./profile-form";
+
+export const dynamic = 'force-dynamic';
 
 export default function ProfilePage() {
   return (

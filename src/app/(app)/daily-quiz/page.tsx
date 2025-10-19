@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Loader2 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 const DailyQuiz = dynamic(() => import('./daily-quiz').then(mod => mod.DailyQuiz), {
   ssr: false,
   loading: () => (

@@ -10,6 +10,7 @@ import i18n from '@/lib/i18n';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { ThemeProvider } from '@/components/theme-provider';
 
+export const dynamic = 'force-dynamic';
 
 const inter = Inter({
   subsets: ['latin'],
