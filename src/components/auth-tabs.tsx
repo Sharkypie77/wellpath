@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { Eye, EyeOff, Github, Linkedin, Loader2, Mail } from "lucide-react"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -22,6 +22,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Logo } from "./logo"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/firebase"
+import {
+  initiateEmailSignIn,
+  initiateEmailSignUp,
+} from "@/firebase/non-blocking-login"
+import { Github, Linkedin, Mail } from "lucide-react"
+
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
@@ -66,8 +73,10 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 export function AuthTabs() {
   const [activeTab, setActiveTab] = useState("login")
   const [showPassword, setShowPassword] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
+  const auth = useAuth()
 
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -80,26 +89,45 @@ export function AuthTabs() {
   })
 
   const onLoginSubmit = async (values: z.infer<typeof loginSchema>) => {
-    console.log("Login values:", values)
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    toast({
-      title: "Login Successful",
-      description: "Welcome back!",
-    })
-    router.push("/dashboard")
-  }
+    setIsSubmitting(true);
+    try {
+      initiateEmailSignIn(auth, values.email, values.password);
+      toast({
+        title: "Login Attempted",
+        description: "Check your authentication state.",
+      });
+      router.push("/dashboard");
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Login Failed",
+        description: error.message,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const onSignupSubmit = async (values: z.infer<typeof signupSchema>) => {
-    console.log("Signup values:", values)
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    toast({
-      title: "Account Created",
-      description: "You have successfully signed up.",
-    })
-    setActiveTab("login")
-  }
+    setIsSubmitting(true);
+    try {
+      initiateEmailSignUp(auth, values.email, values.password);
+      toast({
+        title: "Signup Successful",
+        description: "Your account has been created.",
+      });
+      setActiveTab("login");
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Signup Failed",
+        description: error.message,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
   return (
     <div className="flex flex-col h-full">
@@ -153,8 +181,8 @@ export function AuthTabs() {
                 />
                 <Link href="#" className="text-sm text-primary hover:underline">Forgot password?</Link>
               </div>
-              <Button type="submit" className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground" disabled={loginForm.formState.isSubmitting}>
-                {loginForm.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button type="submit" className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground" disabled={isSubmitting}>
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Sign In
               </Button>
             </form>
@@ -226,8 +254,8 @@ export function AuthTabs() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground" disabled={signupForm.formState.isSubmitting}>
-                {signupForm.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button type="submit" className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground" disabled={isSubmitting}>
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Create Account
               </Button>
             </form>

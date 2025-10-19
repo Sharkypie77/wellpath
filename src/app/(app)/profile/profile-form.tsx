@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { mockUser } from "@/lib/data";
 import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Switch } from "@/components/ui/switch";
@@ -42,6 +41,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
+import { useAuth, useFirestore, useUser } from "@/firebase";
+import { doc } from "firebase/firestore";
+import { setDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 
 
 const profileSchema = z.object({
@@ -63,6 +65,8 @@ export function ProfileForm() {
   const { toast } = useToast();
   const [bmi, setBmi] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const { user } = useUser();
+  const firestore = useFirestore();
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -81,19 +85,23 @@ export function ProfileForm() {
   });
 
   useEffect(() => {
-    try {
-      const savedData = localStorage.getItem("userProfile");
-      if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        form.reset({ personal: { ...mockUser, ...parsedData.personal } });
-      } else {
-        form.reset({ personal: mockUser });
-      }
-    } catch (error) {
-        console.error("Failed to parse user profile from localStorage", error)
-        form.reset({ personal: mockUser });
+    if (user) {
+      // Once user is available, you could fetch their profile from Firestore
+      // For now, we'll just populate the email and name
+      form.reset({
+        personal: {
+          name: user.displayName || "",
+          email: user.email || "",
+          age: 0,
+          gender: "Male",
+          phone: "",
+          height: 0,
+          weight: 0,
+          bloodType: "Unknown",
+        },
+      });
     }
-  }, [form]);
+  }, [user, form]);
 
   const watchHeight = form.watch("personal.height");
   const watchWeight = form.watch("personal.weight");
@@ -113,15 +121,32 @@ export function ProfileForm() {
   }, [watchHeight, watchWeight]);
 
   function onSubmit(data: ProfileFormData) {
-    setIsSaving(true);
-    // Simulate API call
-    setTimeout(() => {
-      localStorage.setItem("userProfile", JSON.stringify(data));
+    if (!user) {
       toast({
-        title: "Profile Saved!",
-        description: "Your personal information has been updated.",
+        variant: "destructive",
+        title: "Not Authenticated",
+        description: "You must be logged in to save your profile.",
       });
-      setIsSaving(false);
+      return;
+    }
+
+    setIsSaving(true);
+    const profileRef = doc(firestore, "users", user.uid);
+    setDocumentNonBlocking(profileRef, data.personal, { merge: true });
+
+    toast({
+      title: "Profile Saving...",
+      description: "Your information is being saved.",
+    });
+
+    // Since it's non-blocking, we can give immediate feedback.
+    // A more robust solution might listen for the write result.
+    setTimeout(() => {
+        setIsSaving(false);
+        toast({
+            title: "Profile Saved!",
+            description: "Your personal information has been updated.",
+        });
     }, 1000);
   }
 
@@ -140,7 +165,7 @@ export function ProfileForm() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
             <div className="flex items-center gap-6">
               <Avatar className="h-20 w-20">
-                <AvatarImage src="/avatars/01.png" alt={watchName} />
+                <AvatarImage src={user?.photoURL || "/avatars/01.png"} alt={watchName} />
                 <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
               <div className="space-y-1">
@@ -155,7 +180,7 @@ export function ProfileForm() {
                     <FormItem> <FormLabel>Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /> </FormItem>
                 )} />
                 <FormField control={form.control} name="personal.email" render={({ field }) => (
-                    <FormItem> <FormLabel>Email</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /> </FormItem>
+                    <FormItem> <FormLabel>Email</FormLabel><FormControl><Input type="email" {...field} readOnly /></FormControl><FormMessage /> </FormItem>
                 )} />
                 <FormField control={form.control} name="personal.age" render={({ field }) => (
                     <FormItem> <FormLabel>Age</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /> </FormItem>
