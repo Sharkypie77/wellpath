@@ -1,3 +1,5 @@
+"use client";
+
 import { HeartPulse, ShieldCheck, Zap } from "lucide-react";
 
 export function AuthVisual() {
