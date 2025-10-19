@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useState } from "react"
@@ -24,12 +25,8 @@ import { Logo } from "./logo"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/firebase"
-import {
-  initiateEmailSignIn,
-  initiateEmailSignUp,
-} from "@/firebase/non-blocking-login"
 import { Github, Linkedin, Mail } from "lucide-react"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
 
 
 const loginSchema = z.object({
@@ -113,12 +110,14 @@ export function AuthTabs() {
   const onSignupSubmit = async (values: z.infer<typeof signupSchema>) => {
     setIsSubmitting(true);
     try {
-      await createUserWithEmailAndPassword(auth, values.email, values.password);
+      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      await updateProfile(userCredential.user, { displayName: values.fullName });
+
       toast({
         title: "Signup Successful",
-        description: "Your account has been created. Please log in.",
+        description: "Your account has been created. Redirecting...",
       });
-      setActiveTab("login");
+      router.push("/dashboard");
     } catch (error: any) {
       toast({
         variant: "destructive",

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -46,9 +47,9 @@ export function LandingHeader() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <SheetHeader className="sr-only">
-            <SheetTitle>Navigation Menu</SheetTitle>
-            <SheetDescription>Main navigation links for WellPath.</SheetDescription>
+          <SheetHeader>
+            <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+            <SheetDescription className="sr-only">Main navigation links for WellPath.</SheetDescription>
           </SheetHeader>
           <nav className="grid gap-6 text-lg font-medium mt-8">
             <Link href="/" className="flex items-center gap-2 text-lg font-semibold">

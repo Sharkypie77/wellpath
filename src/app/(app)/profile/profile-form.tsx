@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -42,9 +43,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
 import { useFirestore, useUser, useDoc, useMemoFirebase } from "@/firebase";
-import { doc } from "firebase/firestore";
-import { setDocumentNonBlocking } from "@/firebase/non-blocking-updates";
-
+import { doc, setDoc } from "firebase/firestore";
 
 const profileSchema = z.object({
   personal: z.object({
@@ -65,7 +64,7 @@ export function ProfileForm() {
   const { toast } = useToast();
   const [bmi, setBmi] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const { user } = useUser();
+  const { user, isUserLoading } = useUser();
   const firestore = useFirestore();
 
   const userDocRef = useMemoFirebase(() => {
@@ -94,7 +93,7 @@ export function ProfileForm() {
   useEffect(() => {
     if (userProfile) {
       form.reset({ personal: userProfile });
-    } else if (user) {
+    } else if (user && !isProfileLoading) { // Check isProfileLoading to avoid race conditions
       form.reset({
         personal: {
           ...form.getValues().personal,
@@ -103,7 +102,7 @@ export function ProfileForm() {
         }
       });
     }
-  }, [user, userProfile, form]);
+  }, [user, userProfile, isProfileLoading, form]);
 
 
   const watchHeight = form.watch("personal.height");
@@ -123,7 +122,7 @@ export function ProfileForm() {
     }
   }, [watchHeight, watchWeight]);
 
-  function onSubmit(data: ProfileFormData) {
+  async function onSubmit(data: ProfileFormData) {
     if (!userDocRef) {
       toast({
         variant: "destructive",
@@ -134,20 +133,24 @@ export function ProfileForm() {
     }
 
     setIsSaving(true);
-    setDocumentNonBlocking(userDocRef, data.personal, { merge: true });
-
-    // Since it's non-blocking, we can give immediate feedback.
-    // A more robust solution might listen for the write result.
-    setTimeout(() => {
-        setIsSaving(false);
+    try {
+        await setDoc(userDocRef, data.personal, { merge: true });
         toast({
             title: "Profile Saved!",
             description: "Your personal information has been updated.",
         });
-    }, 1000);
+    } catch (error: any) {
+        toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: error.message || "Could not save profile.",
+        });
+    } finally {
+        setIsSaving(false);
+    }
   }
 
-  if (isProfileLoading) {
+  if (isUserLoading || isProfileLoading) {
     return <div className="flex justify-center items-center p-8"><Loader2 className="w-8 h-8 animate-spin" /></div>;
   }
 
@@ -189,7 +192,7 @@ export function ProfileForm() {
                 <FormField control={form.control} name="personal.gender" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Gender</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl>
                             <SelectContent>
                                 <SelectItem value="Male">Male</SelectItem>
@@ -209,7 +212,7 @@ export function ProfileForm() {
                 <FormField control={form.control} name="personal.bloodType" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Blood Type</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl><SelectTrigger><SelectValue/></SelectTrigger></FormControl>
                             <SelectContent>
                                 {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Unknown"].map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}

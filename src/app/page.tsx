@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -59,15 +60,13 @@ export default function LandingPage() {
   const heroImage = placeholderImages.find(p => p.id === "hero");
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2800); // Adjust time as needed
-
-    return () => clearTimeout(timer);
+    // This effect ensures that the splash screen is only shown once on the client-side.
+    setLoading(false);
   }, []);
 
   if (loading) {
-    return <SplashScreen />;
+    // Show splash screen only on initial client-side render
+    return <SplashScreen onFinished={() => setLoading(false)} />;
   }
   
   return (

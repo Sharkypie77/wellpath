@@ -1,6 +1,29 @@
+
+"use client";
+
+import { useEffect, useState } from "react";
 import { Logo } from "@/components/logo";
 
-export function SplashScreen() {
+interface SplashScreenProps {
+  onFinished: () => void;
+}
+
+export function SplashScreen({ onFinished }: SplashScreenProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const timer = setTimeout(() => {
+      onFinished();
+    }, 2800); // Duration of the splash screen
+
+    return () => clearTimeout(timer);
+  }, [onFinished]);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background animate-fade-out" style={{animationDelay: '2.5s', animationFillMode: 'forwards'}}>
       <div className="flex flex-col items-center justify-center space-y-4">
