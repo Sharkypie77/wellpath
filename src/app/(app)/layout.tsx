@@ -25,6 +25,7 @@ import {
   BookOpen,
   CalendarDays,
   User,
+  MessageCircle,
 } from "lucide-react"
 import { Logo } from "@/components/logo"
 import { AppHeader } from "@/components/app-header"
@@ -32,6 +33,7 @@ import { AppHeader } from "@/components/app-header"
 const menuItems = [
   { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
   { href: "/assessment", icon: HeartPulse, label: "Assessment" },
+  { href: "/chatbot", icon: MessageCircle, label: "Chatbot" },
   { href: "/education", icon: BookOpen, label: "Education" },
   { href: "/medications", icon: Pill, label: "Medications" },
   { href: "/appointments", icon: CalendarDays, label: "Appointments" },
