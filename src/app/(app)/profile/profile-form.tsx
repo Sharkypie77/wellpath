@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -96,6 +97,8 @@ export function ProfileForm() {
 
   const watchHeight = form.watch("personal.height");
   const watchWeight = form.watch("personal.weight");
+  const watchName = form.watch("personal.name");
+  const watchEmail = form.watch("personal.email");
 
   useEffect(() => {
     if (watchHeight > 0 && watchWeight > 0) {
@@ -120,7 +123,7 @@ export function ProfileForm() {
     }, 1000);
   }
 
-  const userInitials = form.getValues("personal.name")?.split(' ').map(n => n[0]).join('') || "";
+  const userInitials = watchName?.split(' ').map(n => n[0]).join('') || "";
 
   return (
     <Tabs defaultValue="personal" className="w-full">
@@ -137,12 +140,12 @@ export function ProfileForm() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
             <div className="flex items-center gap-6">
               <Avatar className="h-20 w-20">
-                <AvatarImage src="/avatars/01.png" alt={form.getValues("personal.name")} />
+                <AvatarImage src="/avatars/01.png" alt={watchName} />
                 <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
               <div className="space-y-1">
-                 <h3 className="text-xl font-semibold">{form.getValues("personal.name")}</h3>
-                 <p className="text-sm text-muted-foreground">{form.getValues("personal.email")}</p>
+                 <h3 className="text-xl font-semibold">{watchName}</h3>
+                 <p className="text-sm text-muted-foreground">{watchEmail}</p>
                  <Button variant="outline" size="sm" type="button">Change Picture</Button>
               </div>
             </div>
@@ -230,7 +233,7 @@ export function ProfileForm() {
             <CardDescription>
               Manage your application preferences.
             </CardDescription>
-          </CardHeader>
+          </Header>
           <CardContent className="space-y-6">
             <div className="flex items-center justify-between rounded-lg border p-4">
               <div className="space-y-0.5">
