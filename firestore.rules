@@ -1,0 +1,255 @@
+/**
+ * @fileoverview Firestore Security Rules for HealthWise Hub.
+ *
+ * Core Philosophy:
+ * This ruleset enforces a strict user-ownership model for private data
+ * nested under `/users/{userId}`. Public data, such as health articles,
+ * is readable by all users.
+ *
+ * Data Structure:
+ * - `/users/{userId}`: User profile information.
+ * - `/users/{userId}/health_metrics/{healthMetricId}`: Health metrics for a user.
+ * - `/users/{userId}/medications/{medicationId}`: Medication information for a user.
+ * - `/users/{userId}/appointments/{appointmentId}`: Appointments for a user.
+ * - `/users/{userId}/health_risk_assessments/{healthRiskAssessmentId}`: Health risk assessments for a user.
+ * - `/users/{userId}/medical_history/{medicalHistoryId}`: Medical history items for a user.
+ * - `/users/{userId}/allergies/{allergyId}`: Allergy information for a user.
+ * - `/health_articles/{healthArticleId}`: Publicly readable health articles.
+ * - `/tags/{tagId}`: Publicly readable tags.
+ *
+ * Key Security Decisions:
+ * - User data is strictly controlled by the user's UID.
+ * - Health articles and tags are publicly readable.
+ * - No user listing is allowed.
+ * - Data validation is minimal in this prototyping phase, focusing on ownership.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Defines the security rules for the `/users/{userId}` collection.
+     * @path /users/{userId}
+     * @allow (create) - Authenticated user can create their own profile if the userId matches their auth.uid.
+     * @allow (get) - Authenticated user can read their own profile if the userId matches their auth.uid.
+     * @allow (update) - Authenticated user can update their own profile if the userId matches their auth.uid.
+     * @allow (delete) - Authenticated user can delete their own profile if the userId matches their auth.uid.
+     * @deny (create) - An unauthenticated user cannot create a profile.
+     * @deny (update) - An unauthenticated user cannot update a profile.
+     * @deny (delete) - An unauthenticated user cannot delete a profile.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Defines the security rules for the `/users/{userId}/health_metrics/{healthMetricId}` collection.
+     * @path /users/{userId}/health_metrics/{healthMetricId}
+     * @allow (create) - Authenticated user can create health metrics under their own profile.
+     * @allow (get) - Authenticated user can read health metrics under their own profile.
+     * @allow (update) - Authenticated user can update health metrics under their own profile.
+     * @allow (delete) - Authenticated user can delete health metrics under their own profile.
+     * @deny (create) - An unauthenticated user cannot create health metrics.
+     * @deny (update) - A user cannot modify the userId of a health metric after creation.
+     * @deny (delete) - An unauthenticated user cannot delete health metrics.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId}/health_metrics/{healthMetricId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Defines the security rules for the `/users/{userId}/medications/{medicationId}` collection.
+     * @path /users/{userId}/medications/{medicationId}
+     * @allow (create) - Authenticated user can create medication entries under their own profile.
+     * @allow (get) - Authenticated user can read medication entries under their own profile.
+     * @allow (update) - Authenticated user can update medication entries under their own profile.
+     * @allow (delete) - Authenticated user can delete medication entries under their own profile.
+     * @deny (create) - An unauthenticated user cannot create medication entries.
+     * @deny (update) - A user cannot modify the userId of a medication entry after creation.
+     * @deny (delete) - An unauthenticated user cannot delete medication entries.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId}/medications/{medicationId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Defines the security rules for the `/users/{userId}/appointments/{appointmentId}` collection.
+     * @path /users/{userId}/appointments/{appointmentId}
+     * @allow (create) - Authenticated user can create appointment entries under their own profile.
+     * @allow (get) - Authenticated user can read appointment entries under their own profile.
+     * @allow (update) - Authenticated user can update appointment entries under their own profile.
+     * @allow (delete) - Authenticated user can delete appointment entries under their own profile.
+     * @deny (create) - An unauthenticated user cannot create appointment entries.
+     * @deny (update) - A user cannot modify the userId of a appointment entry after creation.
+     * @deny (delete) - An unauthenticated user cannot delete appointment entries.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId}/appointments/{appointmentId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Defines the security rules for the `/health_articles/{healthArticleId}` collection.
+     * @path /health_articles/{healthArticleId}
+     * @allow (get) - Any user can read health articles.
+     * @allow (list) - Any user can list health articles.
+     * @deny (create) - No one can create health articles via the client.
+     * @deny (update) - No one can update health articles via the client.
+     * @deny (delete) - No one can delete health articles via the client.
+     * @principle Public read access with restricted writes.
+     */
+    match /health_articles/{healthArticleId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Defines the security rules for the `/users/{userId}/health_risk_assessments/{healthRiskAssessmentId}` collection.
+     * @path /users/{userId}/health_risk_assessments/{healthRiskAssessmentId}
+     * @allow (create) - Authenticated user can create health risk assessments under their own profile.
+     * @allow (get) - Authenticated user can read health risk assessments under their own profile.
+     * @allow (update) - Authenticated user can update health risk assessments under their own profile.
+     * @allow (delete) - Authenticated user can delete health risk assessments under their own profile.
+     * @deny (create) - An unauthenticated user cannot create health risk assessments.
+     * @deny (update) - A user cannot modify the userId of a health risk assessment after creation.
+     * @deny (delete) - An unauthenticated user cannot delete health risk assessments.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId}/health_risk_assessments/{healthRiskAssessmentId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Defines the security rules for the `/tags/{tagId}` collection.
+     * @path /tags/{tagId}
+     * @allow (get) - Any user can read tags.
+     * @allow (list) - Any user can list tags.
+     * @deny (create) - No one can create tags via the client.
+     * @deny (update) - No one can update tags via the client.
+     * @deny (delete) - No one can delete tags via the client.
+     * @principle Public read access with restricted writes.
+     */
+    match /tags/{tagId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Defines the security rules for the `/users/{userId}/medical_history/{medicalHistoryId}` collection.
+     * @path /users/{userId}/medical_history/{medicalHistoryId}
+     * @allow (create) - Authenticated user can create medical history items under their own profile.
+     * @allow (get) - Authenticated user can read medical history items under their own profile.
+     * @allow (update) - Authenticated user can update medical history items under their own profile.
+     * @allow (delete) - Authenticated user can delete medical history items under their own profile.
+     * @deny (create) - An unauthenticated user cannot create medical history items.
+     * @deny (update) - A user cannot modify the userId of a medical history item after creation.
+     * @deny (delete) - An unauthenticated user cannot delete medical history items.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId}/medical_history/{medicalHistoryId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Defines the security rules for the `/users/{userId}/allergies/{allergyId}` collection.
+     * @path /users/{userId}/allergies/{allergyId}
+     * @allow (create) - Authenticated user can create allergy information under their own profile.
+     * @allow (get) - Authenticated user can read allergy information under their own profile.
+     * @allow (update) - Authenticated user can update allergy information under their own profile.
+     * @allow (delete) - Authenticated user can delete allergy information under their own profile.
+     * @deny (create) - An unauthenticated user cannot create allergy information.
+     * @deny (update) - A user cannot modify the userId of a allergy after creation.
+     * @deny (delete) - An unauthenticated user cannot delete allergy information.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId}/allergies/{allergyId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}
