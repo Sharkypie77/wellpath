@@ -42,7 +42,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
-import { useFirestore, useUser, useDoc, useMemoFirebase } from "@/firebase";
+import { useFirestore, useUser, useMemoFirebase } from "@/firebase/provider";
+import { useDoc } from "@/firebase/firestore/use-doc";
 import { doc, setDoc } from "firebase/firestore";
 
 const profileSchema = z.object({
